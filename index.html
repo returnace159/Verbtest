@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>German Verb Master - Professional Edition</title>
     <style>
-        /* Modern Mühendislik Teması */
+        /* Modern Mühendislik Teması - Demir Kural 3: Dokunulmadı */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         body {
-            background: #0f172a; /* Koyu, modern arka plan */
+            background: #0f172a;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             display: flex;
             justify-content: center;
@@ -22,7 +22,7 @@
             color: #f1f5f9;
         }
         .card {
-            background: #1e293b; /* Kart rengi */
+            background: #1e293b;
             width: 100%;
             max-width: 480px;
             border-radius: 24px;
@@ -36,7 +36,7 @@
         .title {
             font-size: 2.2rem;
             font-weight: 800;
-            color: #38bdf8; /* Parlak mavi başlık */
+            color: #38bdf8;
             text-align: center;
             letter-spacing: -1px;
         }
@@ -83,7 +83,7 @@
             text-align: center;
             line-height: 1.5;
         }
-        .hidden { display: none; }
+        .hidden { display: none !important; }
         .score {
             background: #334155;
             padding: 10px;
@@ -162,12 +162,12 @@
             <div class="title">🇩🇪 Verb Master</div>
             <div class="sub">Präpositionen: Akk / Dat</div>
             
-            <div class="list-btn" data-list="first">
+            <div class="list-btn" onclick="startQuiz('first')">
                 📘 Liste 1
                 <span class="badge">warten · denken · teilnehmen</span>
             </div>
             
-            <div class="list-btn" data-list="second">
+            <div class="list-btn" onclick="startQuiz('second')">
                 📗 Liste 2
                 <span class="badge">ankommen · bestehen · sich einigen</span>
             </div>
@@ -200,7 +200,6 @@
 </div>
 
 <script>
-    // Liste 1 ve 2 buraya gelecek (Senin verdiğin data blokları)
     const list1 = [
         {f:"warten", p:"auf", k:"Akk", t:"to wait for", ex_de:"Ich warte auf dich.", ex_en:"I am waiting for you."},
         {f:"denken", p:"an", k:"Akk", t:"to think of", ex_de:"Ich denke an meine Zukunft.", ex_en:"I am thinking about my future."},
@@ -213,4 +212,106 @@
         {f:"suchen", p:"nach", k:"Dat", t:"to search for", ex_de:"Ich suche nach meinem Schlüssel.", ex_en:"I am looking for my key."},
         {f:"antworten", p:"auf", k:"Akk", t:"to answer", ex_de:"Er antwortet auf die Frage.", ex_en:"He answers the question."},
         {f:"arbeiten", p:"an", k:"Dat", t:"to work on", ex_de:"Ich arbeite an einem Projekt.", ex_en:"I am working on a project."},
-        {
+        {f:"bitten", p:"um", k:"Akk", t:"to ask for", ex_de:"Darf ich dich um Hilfe bitten?", ex_en:"May I ask you for help?"},
+        {f:"danken", p:"für", k:"Akk", t:"to thank for", ex_de:"Ich danke dir für das Geschenk.", ex_en:"I thank you for the gift."},
+        {f:"diskutieren", p:"über", k:"Akk", t:"to discuss", ex_de:"Wir diskutieren über Politik.", ex_en:"We are discussing politics."},
+        {f:"einladen", p:"zu", k:"Dat", t:"to invite to", ex_de:"Ich lade dich zu meiner Party ein.", ex_en:"I invite you to my party."},
+        {f:"erinnern", p:"an", k:"Akk", t:"to remind of", ex_de:"Erinnere mich bitte an den Termin.", ex_en:"Please remind me of the appointment."},
+        {f:"erzählen", p:"von", k:"Dat", t:"to tell about", ex_de:"Erzähl mir von deinem Urlaub.", ex_en:"Tell me about your vacation."},
+        {f:"hoffen", p:"auf", k:"Akk", t:"to hope for", ex_de:"Wir hoffen auf besseres Wetter.", ex_en:"We hope for better weather."},
+        {f:"nachdenken", p:"über", k:"Akk", t:"to reflect on", ex_de:"Ich muss über das Angebot nachdenken.", ex_en:"I need to think about the offer."},
+        {f:"träumen", p:"von", k:"Dat", t:"to dream of", ex_de:"Ich träume von einem Haus am Meer.", ex_en:"I dream of a house by the sea."},
+        {f:"verlieben", p:"in", k:"Akk", t:"to fall in love with", ex_de:"Er hat sich in sie verliebt.", ex_en:"He fell in love with her."},
+        {f:"gratulieren", p:"zu", k:"Dat", t:"to congratulate on", ex_de:"Ich gratuliere dir zum Geburtstag.", ex_en:"I congratulate you on your birthday."},
+        {f:"helfen", p:"bei", k:"Dat", t:"to help with", ex_de:"Kannst du mir beim Kochen helfen?", ex_en:"Can you help me with cooking?"},
+        {f:"sich kümmern", p:"um", k:"Akk", t:"to take care of", ex_de:"Kümmere dich um deine Sachen.", ex_en:"Take care of your things."},
+        {f:"passen", p:"auf", k:"Akk", t:"to watch / mind", ex_de:"Pass auf die Kinder auf.", ex_en:"Watch the children."}
+    ];
+
+    const list2 = [
+        {f:"ankommen", p:"auf", k:"Akk", t:"to depend on", ex_de:"Es kommt auf die Übung an.", ex_en:"It depends on the exercise."},
+        {f:"aufhören", p:"mit", k:"Dat", t:"to stop", ex_de:"Hör mit dem Lärm auf!", ex_en:"Stop the noise!"},
+        {f:"ausgehen", p:"von", k:"Dat", t:"to assume", ex_de:"Ich gehe von deiner Ehrlichkeit aus.", ex_en:"I assume your honesty."},
+        {f:"bestehen", p:"aus", k:"Dat", t:"to consist of", ex_de:"Das besteht aus drei Teilen.", ex_en:"It consists of three parts."},
+        {f:"bestehen", p:"auf", k:"Dat", t:"to insist on", ex_de:"Er besteht auf seinem Recht.", ex_en:"He insists on his right."},
+        {f:"einigen", p:"auf", k:"Akk", t:"to agree on", ex_de:"Wir einigen uns auf einen Termin.", ex_en:"We agree on a date."},
+        {f:"entscheiden", p:"für", k:"Akk", t:"to decide for", ex_de:"Ich entscheide mich für das Rote.", ex_en:"I decide for the red one."},
+        {f:"erinnern", p:"an", k:"Akk", t:"to remember", ex_de:"Erinnerst du dich an mich?", ex_en:"Do you remember me?"},
+        {f:"fahren", p:"mit", k:"Dat", t:"to go by", ex_de:"Ich fahre mit dem Bus.", ex_en:"I go by bus."},
+        {f:"fragen", p:"nach", k:"Dat", t:"to ask for", ex_de:"Er fragt nach dem Weg.", ex_en:"He asks for the way."},
+        {f:"gehören", p:"zu", k:"Dat", t:"to belong to", ex_de:"Das gehört zu mir.", ex_en:"That belongs to me."},
+        {f:"gewöhnen", p:"an", k:"Akk", t:"to get used to", ex_de:"Ich gewöhne mich an das Wetter.", ex_en:"I get used to the weather."},
+        {f:"handeln", p:"von", k:"Dat", t:"to be about", ex_de:"Der Film handelt von der Liebe.", ex_en:"The movie is about love."},
+        {f:"sterben", p:"an", k:"Dat", t:"to die of", ex_de:"Er ist an Krebs gestorben.", ex_en:"He died of cancer."},
+        {f:"vorbereiten", p:"auf", k:"Akk", t:"to prepare for", ex_de:"Ich bereite mich auf die Prüfung vor.", ex_en:"I prepare for the exam."},
+        {f:"zögern", p:"mit", k:"Dat", t:"to hesitate with", ex_de:"Zögere nicht mit deiner Antwort.", ex_en:"Don't hesitate with your answer."}
+    ];
+
+    let currentQuestions = [], qIndex = 0, score = 0;
+    const prepsPool = ["an","auf","für","von","mit","um","über","in","nach","zu","bei","aus"];
+
+    function startQuiz(listType) {
+        const list = (listType === 'first') ? list1 : list2;
+        currentQuestions = [...list].sort(() => Math.random() - 0.5);
+        qIndex = 0; score = 0;
+        document.getElementById('home').classList.add('hidden');
+        document.getElementById('quiz').classList.remove('hidden');
+        document.getElementById('result').classList.add('hidden');
+        showQuestion();
+    }
+
+    function showQuestion() {
+        if(qIndex >= currentQuestions.length) { showResult(); return; }
+        const item = currentQuestions[qIndex];
+        document.getElementById('verb').innerText = item.f;
+        document.getElementById('mean').innerText = item.t;
+        document.getElementById('scoreText').innerText = `Correct: ${score} / ${qIndex}`;
+        document.getElementById('fb').innerText = "";
+        document.getElementById('exampleBox').style.display = "none";
+        document.getElementById('nextBtn').style.display = "none";
+
+        let opts = [item.p];
+        while(opts.length < 4) {
+            let r = prepsPool[Math.floor(Math.random()*prepsPool.length)];
+            if(!opts.includes(r)) opts.push(r);
+        }
+        opts.sort(() => Math.random() - 0.5);
+
+        const grid = document.getElementById('options');
+        grid.innerHTML = "";
+        opts.forEach(o => {
+            const b = document.createElement('button');
+            b.className = 'opt';
+            b.innerText = o;
+            b.onclick = () => check(o, item.p, b);
+            grid.appendChild(b);
+        });
+    }
+
+    function check(selected, correct, btn) {
+        document.querySelectorAll('.opt').forEach(b => b.disabled = true);
+        const item = currentQuestions[qIndex];
+        if(selected === correct) {
+            btn.classList.add('correct');
+            score++;
+            document.getElementById('fb').innerHTML = "<span style='color:#22c55e'>✅ Richtig!</span>";
+        } else {
+            btn.classList.add('wrong');
+            document.getElementById('fb').innerHTML = `<span style='color:#ef4444'>❌ Falsch! Richtig: ${correct}</span>`;
+        }
+        document.getElementById('exDe').innerText = item.ex_de;
+        document.getElementById('exEn').innerText = item.ex_en;
+        document.getElementById('exampleBox').style.display = "block";
+        document.getElementById('nextBtn').style.display = "block";
+    }
+
+    document.getElementById('nextBtn').onclick = () => { qIndex++; showQuestion(); };
+    
+    function showResult() {
+        document.getElementById('quiz').classList.add('hidden');
+        document.getElementById('result').classList.remove('hidden');
+        document.getElementById('finalScore').innerText = `${score} / ${currentQuestions.length}`;
+    }
+</script>
+</body>
+</html>
