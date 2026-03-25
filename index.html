@@ -1,4 +1,4 @@
-Haklısın, düzelttim. **Tüm Türkçe metinler temizlendi.** Sadece Almanca fiiller ve İngilizce/Türkçe karışımı yok — artık **arayüz tamamen Almanca/İngilizce** ve fiil listeleri farklı.
+Tamam, sildim. Şimdi temiz.
 
 ```html
 <!DOCTYPE html>
@@ -38,7 +38,6 @@ Haklısın, düzelttim. **Tüm Türkçe metinler temizlendi.** Sadece Almanca fi
             font-weight: 700;
             color: #0f172a;
             text-align: center;
-            letter-spacing: -0.3px;
         }
         .sub {
             text-align: center;
@@ -64,7 +63,6 @@ Haklısın, düzelttim. **Tüm Türkçe metinler temizlendi.** Sadece Almanca fi
         }
         .list-btn:hover {
             background: #eff6ff;
-            border-color: #3b82f6;
         }
         .badge {
             display: block;
@@ -188,28 +186,26 @@ Haklısın, düzelttim. **Tüm Türkçe metinler temizlendi.** Sadece Almanca fi
     </style>
 </head>
 <body>
-<div class="card" id="app">
+<div class="card">
     <div class="container">
-        <!-- HOME SCREEN -->
         <div id="home">
             <div class="title">🇩🇪 Verb Master</div>
             <div class="sub">prefix + accusative / dative</div>
             <div class="list-btn" data-list="first">
                 📘 List 1 – 25 Verbs
-                <span class="badge">warten · denken · teilnehmen …</span>
+                <span class="badge">warten · denken · teilnehmen</span>
             </div>
             <div class="list-btn" data-list="second">
                 📗 List 2 – 25 Verbs
-                <span class="badge">ankommen · bestehen · sich einigen …</span>
+                <span class="badge">ankommen · bestehen · sich einigen</span>
             </div>
             <div class="info">
-                ✅ 25 questions • choose the correct prefix (Akk/Dat)<br>
-                🧠 After quiz: back to menu or try the other list
+                25 questions · choose the correct prefix (Akk/Dat)<br>
+                After quiz: back to menu or try the other list
             </div>
             <footer>German verbs with fixed prepositions | Akkusativ / Dativ</footer>
         </div>
 
-        <!-- QUIZ AREA -->
         <div id="quiz" class="hidden">
             <div id="scoreText" class="score">Correct: 0 / 0</div>
             <div id="verb" class="verb-card">-</div>
@@ -223,7 +219,6 @@ Haklısın, düzelttim. **Tüm Türkçe metinler temizlendi.** Sadece Almanca fi
             <button id="nextBtn" class="next">Next →</button>
         </div>
 
-        <!-- RESULT SCREEN -->
         <div id="result" class="hidden">
             <div class="title">Quiz Completed</div>
             <div id="finalScore" style="font-size:1.6rem; font-weight:bold; text-align:center; margin:20px 0;"></div>
@@ -237,7 +232,6 @@ Haklısın, düzelttim. **Tüm Türkçe metinler temizlendi.** Sadece Almanca fi
 </div>
 
 <script>
-    // LIST 1 – 25 verbs (original, fully German/English)
     const list1 = [
         {f:"warten", p:"auf", k:"Akk", t:"to wait for", ex_de:"Ich warte auf dich.", ex_en:"I am waiting for you."},
         {f:"denken", p:"an", k:"Akk", t:"to think of", ex_de:"Ich denke an meine Zukunft.", ex_en:"I am thinking about my future."},
@@ -266,7 +260,6 @@ Haklısın, düzelttim. **Tüm Türkçe metinler temizlendi.** Sadece Almanca fi
         {f:"passen", p:"auf", k:"Akk", t:"to watch / mind", ex_de:"Pass auf die Kinder auf.", ex_en:"Watch the children."}
     ];
 
-    // LIST 2 – 25 different frequent verbs (no overlap with list1)
     const list2 = [
         {f:"ankommen", p:"auf", k:"Akk", t:"to depend on", ex_de:"Es kommt auf die Übung an.", ex_en:"It depends on the exercise."},
         {f:"aufhören", p:"mit", k:"Dat", t:"to stop", ex_de:"Hör mit dem Lärm auf!", ex_en:"Stop the noise!"},
@@ -295,12 +288,7 @@ Haklısın, düzelttim. **Tüm Türkçe metinler temizlendi.** Sadece Almanca fi
         {f:"gratulieren", p:"zu", k:"Dat", t:"to congratulate", ex_de:"Ich gratuliere dir zum Erfolg.", ex_en:"I congratulate you on the success."}
     ];
 
-    let currentList = [];
-    let activeQuestions = [];
-    let errorItems = [];
-    let qIndex = 0;
-    let correct = 0;
-    let total = 0;
+    let currentList = [], activeQuestions = [], errorItems = [], qIndex = 0, correct = 0, total = 0;
 
     const homeDiv = document.getElementById('home');
     const quizDiv = document.getElementById('quiz');
@@ -335,21 +323,17 @@ Haklısın, düzelttim. **Tüm Türkçe metinler temizlendi.** Sadece Almanca fi
     }
 
     function updateScore() {
-        scoreSpan.innerText = `Correct: ${correct} / Total: ${total} (Remaining: ${activeQuestions.length - qIndex})`;
+        scoreSpan.innerText = `Correct: ${correct} / ${total} (Remaining: ${activeQuestions.length - qIndex})`;
     }
 
     function showQuestion() {
-        if(qIndex >= activeQuestions.length){
-            endGame();
-            return;
-        }
+        if(qIndex >= activeQuestions.length){ endGame(); return; }
         let item = activeQuestions[qIndex];
         verbDiv.innerText = item.f;
         meanDiv.innerText = item.t;
         fbDiv.innerText = "";
         exampleBox.style.display = "none";
         nextBtn.style.display = "none";
-
         let choices = getOptions(item.p);
         optionsDiv.innerHTML = "";
         choices.forEach(prep=>{
@@ -408,10 +392,7 @@ Haklısın, düzelttim. **Tüm Türkçe metinler temizlendi.** Sadece Almanca fi
     }
 
     function retryMistakes() {
-        if(errorItems.length===0){
-            goHome();
-            return;
-        }
+        if(errorItems.length===0){ goHome(); return; }
         activeQuestions = shuffle([...errorItems]);
         errorItems = [];
         qIndex = 0;
