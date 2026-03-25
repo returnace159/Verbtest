@@ -1,10 +1,10 @@
 ```html
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Almanca Fiil Testi | 25'li Listeler</title>
+    <title>German Verb Master | Prefix Quiz</title>
     <style>
         * {
             box-sizing: border-box;
@@ -19,7 +19,6 @@
             align-items: center;
             padding: 20px;
         }
-        /* kartlar */
         .card {
             background: white;
             max-width: 550px;
@@ -27,12 +26,10 @@
             border-radius: 36px;
             box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
             overflow: hidden;
-            transition: all 0.2s ease;
         }
         .inner {
             padding: 28px 24px 32px;
         }
-        /* başlık */
         .title {
             font-size: 1.9rem;
             font-weight: 800;
@@ -49,7 +46,6 @@
             padding-bottom: 16px;
             margin-bottom: 24px;
         }
-        /* ana sayfa butonları */
         .list-buttons {
             display: flex;
             flex-direction: column;
@@ -67,7 +63,6 @@
             cursor: pointer;
             transition: 0.2s;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
         }
         .big-list-btn:hover {
             background: #eef6fc;
@@ -78,7 +73,7 @@
             background: #dee5ed;
             padding: 4px 12px;
             border-radius: 50px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
             color: #2c3e50;
             display: inline-block;
@@ -93,7 +88,6 @@
             color: #2c3e50;
             margin-top: 20px;
         }
-        /* skor ve quiz alanı */
         .scoreboard {
             background: #eef2f6;
             padding: 12px;
@@ -113,7 +107,6 @@
             font-weight: 800;
             text-align: center;
             margin-bottom: 12px;
-            letter-spacing: 1px;
             word-break: break-word;
         }
         .meaning {
@@ -132,7 +125,7 @@
         }
         .opt-btn {
             background: white;
-            border: 2px solid #b9cfE8;
+            border: 2px solid #b9cfe8;
             padding: 14px 6px;
             border-radius: 48px;
             font-weight: 700;
@@ -240,29 +233,29 @@
 <body>
 <div class="card" id="appRoot">
     <div class="inner">
-        <!-- ANA SAYFA (liste seçim) -->
+        <!-- HOME SCREEN (list selection) -->
         <div id="homePanel">
-            <div class="title">🇩🇪 Verb Master</div>
-            <div class="sub">ön ek + dativ / akkusativ</div>
+            <div class="title">🇩🇪 GERMAN VERB MASTER</div>
+            <div class="sub">prefix verbs · accusative / dative</div>
             <div class="list-buttons">
                 <div class="big-list-btn" data-list="first">
-                    📘 1. Liste – 25 Temel Fiil
+                    📘 LIST 1 – 25 Essential Verbs
                     <span class="badge">warten · denken · teilnehmen …</span>
                 </div>
                 <div class="big-list-btn" data-list="second">
-                    📗 2. Liste – 25 Yoğun Fiil
+                    📗 LIST 2 – 25 Advanced Verbs
                     <span class="badge">ankommen · bestehen · sich einigen …</span>
                 </div>
             </div>
             <div class="info-note">
-                ✅ Her testte 25 soru • Ön ek + durum bilgisi (Akk/Dat)<br>
-                🧠 Test bitince ana sayfaya dönebilir veya diğer listeyi deneyebilirsin.
+                ✅ 25 questions per quiz • Choose the correct prefix (Akk/Dat shown)<br>
+                🎯 After the test: back to main menu or switch to the other list
             </div>
         </div>
 
-        <!-- QUIZ ALANI (dinamik) -->
+        <!-- QUIZ AREA -->
         <div id="quizPanel" class="hidden">
-            <div id="scoreDisplay" class="scoreboard">Doğru: 0 / Toplam: 0</div>
+            <div id="scoreDisplay" class="scoreboard">Correct: 0 / Total: 0</div>
             <div id="verbDisplay" class="verb-card">-</div>
             <div id="meaningDisplay" class="meaning"></div>
             <div id="optionsGrid" class="options-grid"></div>
@@ -271,25 +264,25 @@
                 <div id="exampleDe" style="font-weight:bold;"></div>
                 <div id="exampleEn" style="font-size:0.85rem; margin-top:6px;"></div>
             </div>
-            <button id="nextBtn" class="next-btn">Sonraki ➡</button>
+            <button id="nextBtn" class="next-btn">Next Question ➡</button>
         </div>
 
-        <!-- SONUÇ EKRANI (bitiş) -->
+        <!-- RESULT SCREEN -->
         <div id="resultPanel" class="hidden result-screen">
-            <div class="title">✅ Test Tamamlandı!</div>
+            <div class="title">✅ Quiz Completed!</div>
             <div id="finalScoreText" style="font-size:1.5rem; font-weight:bold; margin:15px 0; color:#2c7da0;"></div>
             <div class="result-buttons">
-                <button id="homeFromResult" class="home-btn">🏠 Ana Sayfaya Dön</button>
-                <button id="retryMistakesBtn" class="retry-mistakes">🔁 Sadece Yanlışları Tekrarla</button>
-                <button id="switchOtherListBtn" class="second-list-btn">📋 Diğer Listeye Geç & Test Et</button>
+                <button id="homeFromResult" class="home-btn">🏠 Back to Main Menu</button>
+                <button id="retryMistakesBtn" class="retry-mistakes">🔁 Retry Mistakes Only</button>
+                <button id="switchOtherListBtn" class="second-list-btn">📋 Switch to Other List</button>
             </div>
         </div>
-        <footer>Almanca ön ekli fiiller | Dativ / Akkusativ pratiği</footer>
+        <footer>German verbs with fixed prepositions | Akkusativ / Dativ practice</footer>
     </div>
 </div>
 
 <script>
-    // ---------- 1. LİSTE (orijinal verilen ilk 25) ----------
+    // ---------- LIST 1 (original 25 verbs, no Turkish) ----------
     const FIRST_LIST = [
         {f: "warten", p: "auf", k: "Akk", t: "to wait for", ex_de: "Ich warte auf dich.", ex_en: "I am waiting for you."},
         {f: "denken", p: "an", k: "Akk", t: "to think of", ex_de: "Ich denke an meine Zukunft.", ex_en: "I am thinking about my future."},
@@ -304,7 +297,7 @@
         {f: "arbeiten", p: "an", k: "Dat", t: "to work on", ex_de: "Ich arbeite an einem Projekt.", ex_en: "I am working on a project."},
         {f: "bitten", p: "um", k: "Akk", t: "to ask for", ex_de: "Darf ich dich um Hilfe bitten?", ex_en: "May I ask you for help?"},
         {f: "danken", p: "für", k: "Akk", t: "to thank for", ex_de: "Ich danke dir für das Geschenk.", ex_en: "I thank you for the gift."},
-        {f: "diskutieren", p: "über", k: "Akk", t: "to discuss about", ex_de: "Wir diskutieren über Politik.", ex_en: "We are discussing politics."},
+        {f: "diskutieren", p: "über", k: "Akk", t: "to discuss", ex_de: "Wir diskutieren über Politik.", ex_en: "We are discussing politics."},
         {f: "einladen", p: "zu", k: "Dat", t: "to invite to", ex_de: "Ich lade dich zu meiner Party ein.", ex_en: "I invite you to my party."},
         {f: "erinnern", p: "an", k: "Akk", t: "to remind of", ex_de: "Erinnere mich bitte an den Termin.", ex_en: "Please remind me of the appointment."},
         {f: "erzählen", p: "von", k: "Dat", t: "to tell about", ex_de: "Erzähl mir von deinem Urlaub.", ex_en: "Tell me about your vacation."},
@@ -315,10 +308,10 @@
         {f: "gratulieren", p: "zu", k: "Dat", t: "to congratulate on", ex_de: "Ich gratuliere dir zum Geburtstag.", ex_en: "I congratulate you on your birthday."},
         {f: "helfen", p: "bei", k: "Dat", t: "to help with", ex_de: "Kannst du mir beim Kochen helfen?", ex_en: "Can you help me with cooking?"},
         {f: "sich kümmern", p: "um", k: "Akk", t: "to take care of", ex_de: "Kümmere dich um deine Sachen.", ex_en: "Take care of your things."},
-        {f: "passen", p: "auf", k: "Akk", t: "to watch/mind", ex_de: "Pass auf die Kinder auf.", ex_en: "Watch the children."}
+        {f: "passen", p: "auf", k: "Akk", t: "to watch / mind", ex_de: "Pass auf die Kinder auf.", ex_en: "Watch the children."}
     ];
 
-    // ---------- 2. LİSTE (sık kullanılan, akk/dat, ilk listeden farklı) ----------
+    // ---------- LIST 2 (frequent prefix verbs, fully English/German, no Turkish) ----------
     const SECOND_LIST = [
         {f: "ankommen", p: "auf", k: "Akk", t: "to depend on", ex_de: "Es kommt auf die Übung an.", ex_en: "It depends on the exercise."},
         {f: "aufhören", p: "mit", k: "Dat", t: "to stop", ex_de: "Hör mit dem Lärm auf!", ex_en: "Stop the noise!"},
@@ -347,14 +340,14 @@
         {f: "zögern", p: "mit", k: "Dat", t: "to hesitate with", ex_de: "Zögere nicht mit deiner Antwort.", ex_en: "Don't hesitate with your answer."}
     ];
 
-    let activeList = [];          // şu anki fiil havuzu
-    let workingPool = [];         // kullanılacak sıralı dizi
+    let activeList = [];
+    let workingPool = [];
     let errorPool = [];
     let currentIndex = 0;
     let correctCount = 0;
     let totalAsked = 0;
 
-    // DOM elemanları
+    // DOM elements
     const homeDiv = document.getElementById('homePanel');
     const quizDiv = document.getElementById('quizPanel');
     const resultDiv = document.getElementById('resultPanel');
@@ -368,7 +361,6 @@
     const exampleEn = document.getElementById('exampleEn');
     const nextBtn = document.getElementById('nextBtn');
 
-    // yardımcı: rastgele seçenekler (ön ek havuzu)
     const commonPreps = ["an", "auf", "für", "von", "mit", "um", "über", "in", "nach", "zu", "bei", "aus", "nach"];
 
     function getRandomChoices(correctPrep, count = 4) {
@@ -385,7 +377,7 @@
     }
 
     function updateScoreUI() {
-        scoreDisplay.innerText = `✅ Doğru: ${correctCount} / Toplam: ${totalAsked} (Kalan: ${workingPool.length - currentIndex})`;
+        scoreDisplay.innerText = `✅ Correct: ${correctCount} / Total: ${totalAsked} (Remaining: ${workingPool.length - currentIndex})`;
     }
 
     function showQuestion() {
@@ -416,11 +408,11 @@
                 if(prep === item.p) {
                     btn.classList.add('correct');
                     correctCount++;
-                    feedbackDiv.innerHTML = `<span style="color:#2b7e3a">✔ Doğru! (${item.k})</span>`;
+                    feedbackDiv.innerHTML = `<span style="color:#2b7e3a">✔ Correct! (${item.k})</span>`;
                 } else {
                     btn.classList.add('wrong');
                     errorPool.push(item);
-                    feedbackDiv.innerHTML = `<span style="color:#bc4e2c">✘ Yanlış! Doğrusu: <strong>${item.p}</strong> (${item.k})</span>`;
+                    feedbackDiv.innerHTML = `<span style="color:#bc4e2c">✘ Wrong! Correct prefix: <strong>${item.p}</strong> (${item.k})</span>`;
                 }
                 updateScoreUI();
                 nextBtn.style.display = "block";
@@ -439,7 +431,7 @@
         quizDiv.classList.add('hidden');
         resultDiv.classList.remove('hidden');
         const finalMsg = `${correctCount} / ${totalAsked}`;
-        document.getElementById('finalScoreText').innerHTML = `🎯 Başarı: ${finalMsg}`;
+        document.getElementById('finalScoreText').innerHTML = `🎯 Score: ${finalMsg}`;
         const retryBtn = document.getElementById('retryMistakesBtn');
         if(errorPool.length === 0) {
             retryBtn.style.opacity = "0.6";
@@ -451,7 +443,6 @@
     }
 
     function startQuiz(listType) {
-        // listType: 'first' ya da 'second'
         if(listType === 'first') {
             activeList = FIRST_LIST.map(v => ({...v}));
         } else {
@@ -475,7 +466,6 @@
 
     function restartWithMistakes() {
         if(errorPool.length === 0) {
-            // hiç yanlış yoksa ana menüye dön
             goHome();
             return;
         }
@@ -495,7 +485,6 @@
         homeDiv.classList.remove('hidden');
         quizDiv.classList.add('hidden');
         resultDiv.classList.add('hidden');
-        // temizlik
         currentIndex = 0;
         correctCount = 0;
         totalAsked = 0;
@@ -503,10 +492,6 @@
     }
 
     function switchToOtherList() {
-        // mevcut hangi listedeyiz? ana sayfaya dönüp farklı listeyi başlatmak için
-        // pratik: ana ekrandan tekrar seçim yaptırmak daha temiz. Ama buton diğer listeyi başlatır.
-        // aktif listenin first mi second mi olduğunu bilmiyoruz; home'a dönüp kullanıcı seçsin daha iyi.
-        // ama direkt diğer listeyi başlatabiliriz:
         const currentlyFirst = (activeList === FIRST_LIST || (activeList.length === FIRST_LIST.length && activeList[0]?.f === FIRST_LIST[0]?.f));
         if(currentlyFirst) {
             startQuiz('second');
