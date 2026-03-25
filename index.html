@@ -1,83 +1,57 @@
-        {f:"passen", p:"zu", k:"Dat", t:"fit / match", ex_de:"Das Hemd passt zur Hose.", ex_en:"The shirt matches the pants."}
+<script>
+    const l1 = [
+        {f:"warten", p:"auf", k:"Akk", t:"wait for", ex_de:"Ich warte auf dich.", ex_en:"I am waiting for you."},
+        {f:"denken", p:"an", k:"Akk", t:"think of", ex_de:"Ich denke an meine Zukunft.", ex_en:"I am thinking about my future."},
+        {f:"glauben", p:"an", k:"Akk", t:"believe in", ex_de:"Er glaubt an Gott.", ex_en:"He believes in God."},
+        {f:"teilnehmen", p:"an", k:"Dat", t:"participate in", ex_de:"Nimmst du an dem Kurs teil?", ex_en:"Are you participating in the course?"},
+        {f:"sich freuen", p:"auf", k:"Akk", t:"look forward to", ex_de:"Ich freue mich auf die Ferien.", ex_en:"I'm looking forward to the holidays."},
+        {f:"sprechen", p:"über", k:"Akk", t:"talk about", ex_de:"Wir sprechen über den Film.", ex_en:"We are talking about the movie."},
+        {f:"interessieren", p:"für", k:"Akk", t:"be interested in", ex_de:"Ich interessiere mich für Kunst.", ex_en:"I am interested in art."},
+        {f:"sorgen", p:"für", k:"Akk", t:"care for", ex_de:"Ich sorge für meine Mutter.", ex_en:"I take care of my mother."},
+        {f:"suchen", p:"nach", k:"Dat", t:"search for", ex_de:"Ich suche nach meinem Schlüssel.", ex_en:"I am looking for my key."},
+        {f:"antworten", p:"auf", k:"Akk", t:"answer", ex_de:"Er antwortet auf die Frage.", ex_en:"He answers the question."},
+        {f:"arbeiten", p:"an", k:"Dat", t:"work on", ex_de:"Ich arbeite an einem Projekt.", ex_en:"I am working on a project."},
+        {f:"bitten", p:"um", k:"Akk", t:"ask for", ex_de:"Darf ich dich um Hilfe bitten?", ex_en:"May I ask you for help?"},
+        {f:"danken", p:"für", k:"Akk", t:"thank for", ex_de:"Ich danke dir für das Geschenk.", ex_en:"I thank you for the gift."},
+        {f:"diskutieren", p:"über", k:"Akk", t:"discuss", ex_de:"Wir diskutieren über Politik.", ex_en:"We are discussing politics."},
+        {f:"einladen", p:"zu", k:"Dat", t:"invite to", ex_de:"Ich lade dich zu meiner Party ein.", ex_en:"I invite you to my party."},
+        {f:"erinnern", p:"an", k:"Akk", t:"remind of", ex_de:"Erinnere mich bitte an den Termin.", ex_en:"Please remind me of the appointment."},
+        {f:"erzählen", p:"von", k:"Dat", t:"tell about", ex_de:"Erzähl mir von deinem Urlaub.", ex_en:"Tell me about your vacation."},
+        {f:"hoffen", p:"auf", k:"Akk", t:"hope for", ex_de:"Wir hoffen auf besseres Wetter.", ex_en:"We hope for better weather."},
+        {f:"nachdenken", p:"über", k:"Akk", t:"reflect on", ex_de:"Ich muss über das Angebot nachdenken.", ex_en:"I need to think about the offer."},
+        {f:"träumen", p:"von", k:"Dat", t:"dream of", ex_de:"Ich träume von einem Haus.", ex_en:"I dream of a house."},
+        {f:"verlieben", p:"in", k:"Akk", t:"fall in love with", ex_de:"Er hat sich in sie verliebt.", ex_en:"He fell in love with her."},
+        {f:"gratulieren", p:"zu", k:"Dat", t:"congratulate on", ex_de:"Ich gratuliere dir zum Geburtstag.", ex_en:"I congratulate you on your birthday."},
+        {f:"helfen", p:"bei", k:"Dat", t:"help with", ex_de:"Kannst du mir beim Kochen helfen?", ex_en:"Can you help me with cooking?"},
+        {f:"sich kümmern", p:"um", k:"Akk", t:"take care of", ex_de:"Kümmere dich um deine Sachen.", ex_en:"Take care of your things."},
+        {f:"passen", p:"auf", k:"Akk", t:"watch", ex_de:"Pass auf die Kinder auf.", ex_en:"Watch the children."}
     ];
 
-    let currentList = [];
-    let currentIndex = 0;
-    let score = 0;
-
-    function startQuiz(listName) {
-        currentList = listName === 'first' ? [...l1] : [...l2];
-        currentList.sort(() => Math.random() - 0.5);
-        currentIndex = 0;
-        score = 0;
-        document.getElementById('home').classList.add('hidden');
-        document.getElementById('result').classList.add('hidden');
-        document.getElementById('quiz').classList.remove('hidden');
-        showQuestion();
-    }
-
-    function showQuestion() {
-        if (currentIndex >= currentList.length) {
-            showResult();
-            return;
-        }
-        const item = currentList[currentIndex];
-        document.getElementById('scoreText').innerText = `Progress: ${currentIndex} / ${currentList.length}`;
-        document.getElementById('verb').innerText = item.f;
-        document.getElementById('mean').innerText = `(${item.t})`;
-        document.getElementById('fb').innerText = "";
-        document.getElementById('exampleBox').style.display = "none";
-        document.getElementById('nextBtn').style.display = "none";
-        
-        const preps = ["auf", "an", "für", "über", "von", "zu", "mit", "nach", "um", "vor", "bei", "aus"];
-        let options = [item.p];
-        while (options.length < 4) {
-            let r = preps[Math.floor(Math.random() * preps.length)];
-            if (!options.includes(r)) options.push(r);
-        }
-        options.sort(() => Math.random() - 0.5);
-
-        const optContainer = document.getElementById('options');
-        optContainer.innerHTML = "";
-        options.forEach(o => {
-            const btn = document.createElement('button');
-            btn.className = 'opt';
-            btn.innerText = o;
-            btn.onclick = () => checkAnswer(o, btn);
-            optContainer.appendChild(btn);
-        });
-    }
-
-    function checkAnswer(ans, btn) {
-        const item = currentList[currentIndex];
-        const allOpts = document.querySelectorAll('.opt');
-        allOpts.forEach(b => b.onclick = null);
-
-        if (ans === item.p) {
-            btn.classList.add('correct');
-            document.getElementById('fb').innerHTML = `<span style="color:#22c55e">Richtig! (+${item.k})</span>`;
-            score++;
-        } else {
-            btn.classList.add('wrong');
-            document.getElementById('fb').innerHTML = `<span style="color:#ef4444">Falsch! Richtig: ${item.p} (+${item.k})</span>`;
-        }
-
-        document.getElementById('exDe').innerText = item.ex_de;
-        document.getElementById('exEn').innerText = item.ex_en;
-        document.getElementById('exampleBox').style.display = "block";
-        document.getElementById('nextBtn').style.display = "block";
-    }
-
-    document.getElementById('nextBtn').onclick = () => {
-        currentIndex++;
-        showQuestion();
-    };
-
-    function showResult() {
-        document.getElementById('quiz').classList.add('hidden');
-        document.getElementById('result').classList.remove('hidden');
-        document.getElementById('finalScore').innerText = `${currentList.length} soruda ${score} doğru!`;
-    }
+    const l2 = [
+        {f:"sich bewerben", p:"um", k:"Akk", t:"apply for", ex_de:"Ich bewerbe mich um einen Job.", ex_en:"I am applying for a job."},
+        {f:"abhängen", p:"von", k:"Dat", t:"depend on", ex_de:"Das hängt vom Wetter ab.", ex_en:"That depends on the weather."},
+        {f:"sich beschweren", p:"über", k:"Akk", t:"complain about", ex_de:"Er beschwert sich über den Lärm.", ex_en:"He complains about the noise."},
+        {f:"sich verlassen", p:"auf", k:"Akk", t:"rely on", ex_de:"Ich verlasse mich auf dich.", ex_en:"I am relying on you."},
+        {f:"sich gewöhnen", p:"an", k:"Akk", t:"get used to", ex_de:"Ich gewöhne mich an das Klima.", ex_en:"I'm getting used to the climate."},
+        {f:"angst haben", p:"vor", k:"Dat", t:"be afraid of", ex_de:"Hast du Angst vor Spinnen?", ex_en:"Are you afraid of spiders?"},
+        {f:"leiden", p:"an", k:"Dat", t:"suffer from", ex_de:"Er leidet an einer Krankheit.", ex_en:"He suffers from a disease."},
+        {f:"sich vorbereiten", p:"auf", k:"Akk", t:"prepare for", ex_de:"Ich bereite mich auf die Prüfung vor.", ex_en:"I'm preparing for the exam."},
+        {f:"sich entscheiden", p:"für", k:"Akk", t:"decide for", ex_de:"Ich entscheide mich für dieses Auto.", ex_en:"I decide for this car."},
+        {f:"sich erholen", p:"von", k:"Dat", t:"recover from", ex_de:"Er erholt sich vom Stress.", ex_en:"He is recovering from stress."},
+        {f:"gehören", p:"zu", k:"Dat", t:"belong to", ex_de:"Das gehört zu meiner Arbeit.", ex_en:"That belongs to my work."},
+        {f:"lachen", p:"über", k:"Akk", t:"laugh at", ex_de:"Wir lachen über den Film.", ex_en:"We laugh at the movie."},
+        {f:"rechnen", p:"mit", k:"Dat", t:"expect", ex_de:"Ich rechne mit deiner Hilfe.", ex_en:"I am counting on your help."},
+        {f:"schreiben", p:"an", k:"Akk", t:"write to", ex_de:"Ich schreibe an meine Eltern.", ex_en:"I am writing to my parents."},
+        {f:"sterben", p:"an", k:"Dat", t:"die of", ex_de:"Er ist an Altersschwäche gestorben.", ex_en:"He died of old age."},
+        {f:"sich unterhalten", p:"mit", k:"Dat", t:"chat with", ex_de:"Ich unterhalte mich mit ihm.", ex_en:"I'm chatting with him."},
+        {f:"verstehen", p:"von", k:"Dat", t:"know about", ex_de:"Er versteht viel von Technik.", ex_en:"He knows a lot about tech."},
+        {f:"wissen", p:"von", k:"Dat", t:"know of", ex_de:"Ich weiß nichts von dem Problem.", ex_en:"I know nothing of the problem."},
+        {f:"sich wundern", p:"über", k:"Akk", t:"wonder at", ex_de:"Ich wundere mich über dich.", ex_en:"I wonder about you."},
+        {f:"zweifeln", p:"an", k:"Dat", t:"doubt", ex_de:"Er zweifelt an der Wahrheit.", ex_en:"He doubts the truth."},
+        {f:"sich treffen", p:"mit", k:"Dat", t:"meet with", ex_de:"Ich treffe mich mit Maria.", ex_en:"I am meeting with Maria."},
+        {f:"sich einigen", p:"auf", k:"Akk", t:"agree on", ex_de:"Wir einigen uns auf den Preis.", ex_en:"We agree on the price."},
+        {f:"sich ärgern", p:"über", k:"Akk", t:"be angry about", ex_de:"Ich ärgere mich über den Stau.", ex_en:"I'm angry about the traffic."},
+        {f:"bestehen", p:"aus", k:"Dat", t:"consist of", ex_de:"Das team besteht aus 10 Leuten.", ex_en:"The team consists of 10 people."},
+        {f:"passen", p:"zu", k:"Dat", t:"fit / match", ex_de:"Das Hemd passt zur Hose.", ex_en:"The shirt matches the pants."}
+    ];
 </script>
-</body>
-</html>
