@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>German Verb Master</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f8f9fa; display: flex; justify-content: center; padding: 20px; margin: 0; }
+        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.1); width: 100%; max-width: 450px; text-align: center; }
+        .header { color: #2c3e50; font-size: 1.5rem; font-weight: bold; margin-bottom: 5px; }
+        .scoreboard { background: #ecf0f1; padding: 10px; border-radius: 10px; margin-bottom: 20px; font-weight: bold; color: #34495e; font-size: 0.9rem; }
+        .verb-box { background: #3498db; color: white; padding: 20px; border-radius: 15px; font-size: 1.6rem; font-weight: bold; margin-bottom: 5px; }
+        .meaning { color: #7f8c8d; font-style: italic; margin-bottom: 20px; display: block; font-size: 1.1rem; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        button { padding: 15px; border: 2px solid #3498db; background: white; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 1rem; color: #2c3e50; }
+        button:hover { background: #ebf5fb; }
+        .correct { background: #27ae60 !important; color: white !important; border-color: #27ae60 !important; }
+        .wrong { background: #e74c3c !important; color: white !important; border-color: #e74c3c !important; }
+        #feedback { margin-top: 15px; font-weight: bold; font-size: 1.1rem; }
+        #example-box { margin-top: 15px; padding: 15px; background: #f1f9f5; border-left: 5px solid #27ae60; border-radius: 5px; display: none; text-align: left; }
+        .next-btn { margin-top: 15px; width: 100%; background: #2ecc71; color: white; border: none; display: none; padding: 15px; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+        .result-screen { display: none; }
+        .control-btns { display: flex; gap: 10px; margin-top: 20px; flex-direction: column; }
+        .restart-btn { background: #34495e; color: white; border: none; padding: 15px; border-radius: 12px; cursor: pointer; font-weight: bold; }
+        .retry-errors-btn { background: #e67e22; color: white; border: none; padding: 15px; border-radius: 12px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="header">German Verb Quiz</div>
+    <div id="score-display" class="scoreboard">Correct: 0 / Total: 0</div>
+    <div id="game-area">
+        <div class="verb-box" id="verb-display">Preparing...</div>
+        <span class="meaning" id="meaning-display">...</span>
+        <div class="grid" id="options-grid"></div>
+        <div id="feedback"></div>
+        <div id="example-box">
+            <div id="example-de" style="font-weight: bold;"></div>
+            <div id="example-en" style="font-size: 0.85rem; color: #555; margin-top: 5px;"></div>
+        </div>
+        <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next Question ➔</button>
+    </div>
+    <div id="result-screen" class="result-screen">
+        <h2 style="color: #2c3e50;">Quiz Completed!</h2>
+        <div id="final-score" style="font-size: 1.2rem; margin-bottom: 20px; color: #7f8c8d;"></div>
+        <div class="control-btns">
+            <button class="restart-btn" onclick="restartGame(false)">Restart All</button>
+            <button id="retry-errors-btn" class="retry-errors-btn" onclick="restartGame(true)">Retry Mistakes</button>
+        </div>
+    </div>
+</div>
+<script>
+    const allVerbs = [
+        {f: "warten", p: "auf", k: "Akk", t: "to wait for", ex_de: "Ich warte auf dich.", ex_en: "I am waiting for you."},
+        {f: "denken", p: "an", k: "Akk", t: "to think of", ex_de: "Ich denke an meine Zukunft.", ex_en: "I am thinking about my future."},
+        {f: "glauben", p: "an", k: "Akk", t: "to believe in", ex_de: "Er glaubt an Gott.", ex_en: "He believes in God."},
+        {f: "teilnehmen", p: "an", k: "Dat", t: "to participate in", ex_de: "Nimmst du an dem Kurs teil?", ex_en: "Are you participating in the course?"},
+        {f: "sich freuen", p: "auf", k: "Akk", t: "to look forward to", ex_de: "Ich freue mich auf die Ferien.", ex_en: "I'm looking forward to the holidays."},
+        {f: "sprechen", p: "über", k: "Akk", t: "to talk about", ex_de: "Wir sprechen über den Film.", ex_en: "We are talking about the movie."},
+        {f: "interessieren", p: "für", k: "Akk", t: "to be interested in", ex_de: "Ich interessiere mich für Kunst.", ex_en: "I am interested in art."},
+        {f: "sorgen", p: "für", k: "Akk", t: "to care for", ex_de: "Ich sorge für meine Mutter.", ex_en: "I take care of my mother."},
+        {f: "suchen", p: "nach", k: "Dat", t: "to search for", ex_de: "Ich suche nach meinem Schlüssel.", ex_en: "I am looking for my key."},
+        {f: "antworten", p: "auf", k: "Akk", t: "to answer", ex_de: "Er antwortet auf die Frage.", ex_en: "He answers the question."},
+        {f: "arbeiten", p: "an", k: "Dat", t: "to work on", ex_de: "Ich arbeite an einem Projekt.", ex_en: "I am working on a project."},
+        {f: "bitten", p: "um", k: "Akk", t: "to ask for", ex_de: "Darf ich dich um Hilfe bitten?", ex_en: "May I ask you for help?"},
+        {f: "danken", p: "für", k: "Akk", t: "to thank for", ex_de: "Ich danke dir için das Geschenk.", ex_en: "I thank you for the gift."},
+        {f: "diskutieren", p: "über", k: "Akk", t: "to discuss about", ex_de: "Wir diskutieren über Politik.", ex_en: "We are discussing politics."},
+        {f: "einladen", p: "zu", k: "Dat", t: "to invite to", ex_de: "Ich lade dich zu meiner Party ein.", ex_en: "I invite you to my party."},
+        {f: "erinnern", p: "an", k: "Akk", t: "to remind of", ex_de: "Erinnere mich bitte an den Termin.", ex_en: "Please remind me of the appointment."},
+        {f: "erzählen", p: "von", k: "Dat", t: "to tell about", ex_de: "Erzähl mir von deinem Urlaub.", ex_en: "Tell me about your vacation."},
+        {f: "hoffen", p: "auf", k: "Akk", t: "to hope for", ex_de: "Wir hoffen auf besseres Wetter.", ex_en: "We hope for better weather."},
+        {f: "nachdenken", p: "über", k: "Akk", t: "to reflect on", ex_de: "Ich muss über das Angebot nachdenken.", ex_en: "I need to think about the offer."},
+        {f: "träumen", p: "von", k: "Dat", t: "to dream of", ex_de: "Ich träume von einem Haus am Meer.", ex_en: "I dream of a house by the sea."},
+        {f: "verlieben", p: "in", k: "Akk", t: "to fall in love with", ex_de: "Er hat sich in sie verliebt.", ex_en: "He fell in love with her."},
+        {f: "gratulieren", p: "zu", k: "Dat", t: "to congratulate on", ex_de: "Ich gratuliere dir zum Geburtstag.", ex_en: "I congratulate you on your birthday."},
+        {f: "helfen", p: "bei", k: "Dat", t: "to help with", ex_de: "Kannst du mir beim Kochen helfen?", ex_en: "Can you help me with cooking?"},
+        {f: "sich kümmern", p: "um", k: "Akk", t: "to take care of", ex_de: "Kümmere dich um deine Sachen.", ex_en: "Take care of your things."},
+        {f: "passen", p: "auf", k: "Akk", t: "to watch/mind", ex_de: "Pass auf die Kinder auf.", ex_en: "Watch the children."}
+    ];
+
+    const preps = ["an", "auf", "für", "von", "mit", "um", "über", "in", "nach", "vor", "zu", "bei"];
+    let currentPool = []; let errorPool = []; let currentIndex = 0; let correctCount = 0; let totalAsked = 0;
+
+    function restartGame(onlyErrors) {
+        currentPool = onlyErrors ? [...errorPool] : [...allVerbs];
+        currentPool.sort(() => Math.random() - 0.5);
+        errorPool = []; currentIndex = 0; correctCount = 0; totalAsked = 0;
+        document.getElementById('result-screen').style.display = "none";
+        document.getElementById('game-area').style.display = "block";
+        updateScore(); showQuestion();
+    }
+
+    function updateScore() {
+        document.getElementById('score-display').innerText = `Correct: ${correctCount} / Total: ${totalAsked} (Remaining: ${currentPool.length - currentIndex})`;
+    }
+
+    function showQuestion() {
+        if (currentIndex >= currentPool.length) { endGame(); return; }
+        const item = currentPool[currentIndex];
+        document.getElementById('verb-display').innerText = item.f;
+        document.getElementById('meaning-display').innerText = item.t;
+        document.getElementById('feedback').innerText = "";
+        document.getElementById('example-box').style.display = "none";
+        document.getElementById('next-btn').style.display = "none";
+        let choices = [item.p];
+        while(choices.length < 4) {
+            let r = preps[Math.floor(Math.random() * preps.length)];
+            if(!choices.includes(r)) choices.push(r);
+        }
+        choices.sort(() => Math.random() - 0.5);
+        const grid = document.getElementById('options-grid');
+        grid.innerHTML = "";
+        choices.forEach(c => {
+            const btn = document.createElement('button');
+            btn.innerText = c;
+            btn.onclick = function() {
+                const allButtons = grid.querySelectorAll('button');
+                allButtons.forEach(b => b.disabled = true);
+                totalAsked++;
+                document.getElementById('example-de').innerText = item.ex_de;
+                document.getElementById('example-en').innerText = item.ex_en;
+                document.getElementById('example-box').style.display = "block";
+                if(c === item.p) {
+                    btn.classList.add('correct'); correctCount++;
+                    document.getElementById('feedback').innerHTML = `<span style="color:#27ae60">Perfect! (+${item.k})</span>`;
+                } else {
+                    btn.classList.add('wrong'); errorPool.push(item);
+                    document.getElementById('feedback').innerHTML = `<span style="color:#e74c3c">Wrong! It's: ${item.p}</span>`;
+                }
+                updateScore(); document.getElementById('next-btn').style.display = "block";
+            };
+            grid.appendChild(btn);
+        });
+    }
+
+    function nextQuestion() { currentIndex++; showQuestion(); }
+    function endGame() {
+        document.getElementById('game-area').style.display = "none";
+        document.getElementById('result-screen').style.display = "block";
+        document.getElementById('final-score').innerText = `Final Score: ${correctCount} / ${totalAsked}`;
+        const errorBtn = document.getElementById('retry-errors-btn');
+        errorBtn.style.display = errorPool.length > 0 ? "block" : "none";
+        if(errorPool.length > 0) errorBtn.innerText = `Retry Mistakes (${errorPool.length})`;
+    }
+    window.onload = function() { restartGame(false); };
+</script>
+</body>
+</html>
