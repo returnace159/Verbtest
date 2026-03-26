@@ -2,113 +2,98 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>German Verb Master - Full Version</title>
+    <title>Verb Master v1.0</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #f1f5f9; font-family: system-ui, -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .card { background: white; width: 100%; max-width: 480px; border-radius: 32px; box-shadow: 0 12px 30px rgba(0,0,0,0.08); overflow: hidden; }
-        .container { padding: 28px 24px 32px; }
-        .title { font-size: 2rem; font-weight: 700; color: #0f172a; text-align: center; }
-        .sub { text-align: center; color: #475569; font-weight: 500; margin: 4px 0 28px; font-size: 0.9rem; }
-        .list-btn { width: 100%; background: white; border: 1.5px solid #2563eb; border-radius: 60px; padding: 16px 20px; margin-bottom: 14px; text-align: center; font-weight: 700; font-size: 1.2rem; color: #1e40af; cursor: pointer; transition: 0.15s; }
-        .list-btn:hover { background: #eff6ff; transform: translateY(-1px); }
-        .badge { display: block; font-size: 0.7rem; font-weight: normal; color: #64748b; margin-top: 6px; }
-        .score { background: #eef2ff; padding: 12px; border-radius: 40px; text-align: center; font-weight: 600; margin-bottom: 24px; font-size: 0.9rem; color: #2563eb; }
-        .verb-card { background: #2563eb; color: white; padding: 30px 15px; border-radius: 28px; font-size: 1.8rem; font-weight: 700; text-align: center; margin-bottom: 12px; }
-        .meaning { text-align: center; font-style: italic; color: #334155; margin-bottom: 24px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .opt { background: white; border: 1.5px solid #cbd5e1; padding: 14px; border-radius: 60px; font-weight: 600; cursor: pointer; font-size: 1rem; transition: 0.2s; }
-        .correct { background: #16a34a !important; border-color: #16a34a !important; color: white !important; }
-        .wrong { background: #dc2626 !important; border-color: #dc2626 !important; color: white !important; }
-        .example { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 15px; border-radius: 16px; margin-top: 15px; display: none; }
-        .next { background: #0f172a; color: white; border: none; width: 100%; padding: 16px; border-radius: 60px; font-weight: bold; margin-top: 18px; cursor: pointer; display: none; }
-        .hidden { display: none !important; }
+        body { font-family: sans-serif; background: #f0f4f8; display: flex; justify-content: center; padding: 20px; }
+        .card { background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 400px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .btn { width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; background: #2563eb; color: white; }
+        .opt { background: white; color: #333; border: 2px solid #ddd; margin: 5px 0; }
+        .hidden { display: none; }
+        .correct { background: #16a34a; color: white; }
+        .wrong { background: #dc2626; color: white; }
+        #verb { font-size: 24px; text-align: center; margin: 20px 0; font-weight: bold; color: #2563eb; }
     </style>
 </head>
 <body>
+
 <div class="card">
-    <div class="container">
-        <div id="home">
-            <div class="title">🇩🇪 Verb Master</div>
-            <div class="sub">Präpositionen: Akk / Dat</div>
-            <div class="list-btn" onclick="startQuiz('first')">📘 Liste 1<span class="badge">warten · denken · teilnehmen</span></div>
-            <div class="list-btn" onclick="startQuiz('second')">📗 Liste 2<span class="badge">sich erinnern · ankommen</span></div>
-        </div>
+    <div id="home">
+        <h2 style="text-align:center">🇩🇪 Verb Master</h2>
+        <button class="btn" onclick="start('A')">LİSTE 1 (Basic)</button>
+        <button class="btn" onclick="start('B')">LİSTE 2 (Advanced)</button>
+    </div>
 
-        <div id="quiz" class="hidden">
-            <div id="scoreText" class="score">Soru: 0 / 0</div>
-            <div id="verb" class="verb-card">-</div>
-            <div id="mean" class="meaning"></div>
-            <div id="options" class="grid"></div>
-            <div id="fb" style="text-align:center; margin: 15px 0;"></div>
-            <div id="exampleBox" class="example"><div id="exDe"></div><div id="exEn" style="font-size:0.8rem; color:#666;"></div></div>
-            <button id="nextBtn" class="next" onclick="nextQuestion()">DEVAM ET →</button>
-        </div>
+    <div id="quiz" class="hidden">
+        <div id="score" style="text-align:center; font-size:12px"></div>
+        <div id="verb"></div>
+        <div id="options"></div>
+        <div id="ex" class="hidden" style="margin-top:15px; padding:10px; border-left:4px solid #16a34a; background:#f0fdf4; font-size:14px"></div>
+        <button id="next" class="btn hidden" onclick="nextQ()" style="background:#0f172a">SIRADAKİ SORU</button>
+    </div>
 
-        <div id="result" class="hidden">
-            <div class="title">Bitti! 🎉</div>
-            <div id="finalScore" style="font-size:2rem; text-align:center; margin:20px 0;"></div>
-            <button onclick="location.reload()" class="list-btn">TEKRAR BAŞLA</button>
-        </div>
+    <div id="res" class="hidden" style="text-align:center">
+        <h2>Bitti! 🎉</h2>
+        <h1 id="total"></h1>
+        <button class="btn" onclick="location.reload()">BAŞA DÖN</button>
     </div>
 </div>
 
 <script>
-    const list1 = [
-        {f:"warten", p:"auf", k:"Akk", t:"beklemek", ex_de:"Ich warte auf dich.", ex_en:"I am waiting for you."},
-        {f:"denken", p:"an", k:"Akk", t:"düşünmek", ex_de:"Ich denke an dich.", ex_en:"I am thinking about you."},
-        {f:"teilnehmen", p:"an", k:"Dat", t:"katılmak", ex_de:"Ich nehme an dem Kurs teil.", ex_en:"I participate in the course."}
-    ];
-    const list2 = [
-        {f:"ankommen", p:"auf", k:"Akk", t:"bağlı olmak", ex_de:"Es kommt auf dich an.", ex_en:"It depends on you."},
-        {f:"sich freuen", p:"auf", k:"Akk", t:"dört gözle beklemek", ex_de:"Ich freue mich auf den Urlaub.", ex_en:"I look forward to the holiday."}
-    ];
+    const data = {
+        A: [
+            {f:"warten", p:"auf", t:"beklemek", ex:"Ich warte auf dich."},
+            {f:"denken", p:"an", t:"düşünmek", ex:"Ich denke an dich."},
+            {f:"glauben", p:"an", t:"inanmak", ex:"Glaubst du an mich?"},
+            {f:"teilnehmen", p:"an", t:"katılmak", ex:"Nimmst du an dem Kurs teil?"}
+        ],
+        B: [
+            {f:"sich freuen", p:"auf", t:"sevinmek (gelecek)", ex:"Ich freue mich auf den Urlaub."},
+            {f:"sich erinnern", p:"an", t:"hatırlamak", ex:"Erinnerst du dich an den Film?"},
+            {f:"ankommen", p:"auf", t:"bağlı olmak", ex:"Es kommt auf das Wetter an."}
+        ]
+    };
 
-    let activeQ = [], qIdx = 0, score = 0;
+    let current = [], idx = 0, score = 0;
 
-    function startQuiz(type) {
-        activeQ = (type === 'first' ? list1 : list2).sort(() => Math.random() - 0.5);
+    function start(list) {
+        current = data[list].sort(() => Math.random() - 0.5);
         document.getElementById('home').classList.add('hidden');
         document.getElementById('quiz').classList.remove('hidden');
-        showQ();
+        show();
     }
 
-    function showQ() {
-        const item = activeQ[qIdx];
-        document.getElementById('verb').innerText = item.f;
-        document.getElementById('mean').innerText = item.t;
-        document.getElementById('scoreText').innerText = `Soru: ${qIdx + 1} / ${activeQ.length}`;
-        document.getElementById('fb').innerText = "";
-        document.getElementById('exampleBox').style.display = "none";
-        document.getElementById('nextBtn').style.display = "none";
+    function show() {
+        let q = current[idx];
+        document.getElementById('score').innerText = `Soru: ${idx+1}/${current.length}`;
+        document.getElementById('verb').innerText = q.f;
+        document.getElementById('ex').classList.add('hidden');
+        document.getElementById('next').classList.add('hidden');
         
-        let opts = [item.p, "in", "mit", "über"].sort(() => Math.random() - 0.5);
-        const grid = document.getElementById('options');
-        grid.innerHTML = "";
+        let opts = [q.p, "in", "mit", "von"].sort(() => Math.random() - 0.5);
+        let html = "";
         opts.forEach(o => {
-            const b = document.createElement('button');
-            b.className = 'opt'; b.innerText = o;
-            b.onclick = () => {
-                document.querySelectorAll('.opt').forEach(btn => btn.disabled = true);
-                if(o === item.p) { b.classList.add('correct'); score++; } 
-                else { b.classList.add('wrong'); }
-                document.getElementById('exDe').innerText = item.ex_de;
-                document.getElementById('exEn').innerText = item.ex_en;
-                document.getElementById('exampleBox').style.display = "block";
-                document.getElementById('nextBtn').style.display = "block";
-            };
-            grid.appendChild(b);
+            html += `<button class="btn opt" onclick="check(this, '${o}', '${q.p}')">${o}</button>`;
         });
+        document.getElementById('options').innerHTML = html;
     }
 
-    function nextQuestion() {
-        qIdx++;
-        if(qIdx < activeQ.length) showQ();
+    function check(btn, sel, cor) {
+        document.querySelectorAll('.opt').forEach(b => b.disabled = true);
+        if(sel === cor) { btn.classList.add('correct'); score++; }
+        else { btn.classList.add('wrong'); }
+        
+        document.getElementById('ex').innerText = current[idx].ex;
+        document.getElementById('ex').classList.remove('hidden');
+        document.getElementById('next').classList.remove('hidden');
+    }
+
+    function nextQ() {
+        idx++;
+        if(idx < current.length) show();
         else {
             document.getElementById('quiz').classList.add('hidden');
-            document.getElementById('result').classList.remove('hidden');
-            document.getElementById('finalScore').innerText = `Puan: ${score} / ${activeQ.length}`;
+            document.getElementById('res').classList.remove('hidden');
+            document.getElementById('total').innerText = `${score} / ${current.length}`;
         }
     }
 </script>
