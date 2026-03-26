@@ -1,70 +1,218 @@
-<!DOCTYPE html>
+Kanka, bende doğrudan bir "tıklayınca kopyala" (copy to clipboard) linki oluşturma özelliği yok ama senin için işi en kolay hale getirebilirim.
+
+Aşağıdaki butona benzer yapıyı kullanabilirsin veya kodun tamamını senin için tek bir blokta aşağıya bırakıyorum. Mobildeysen üzerine basılı tutup "Tümünü Seç" diyerek, bilgisayardaysan sağ üstteki kopyalama simgesine tıklayarak tek seferde alabilirsin.
+
+Unutma: Kopyalarken en baştaki ve en sondaki *** işaretlerini dahil etme, sadece <!DOCTYPE html> ile başlayan <!DOCTYPE html>
+
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>German Verb Master - 50 Verbs</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: #f1f5f9;
-            font-family: system-ui, -apple-system, sans-serif;
-            display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; padding: 20px;
-        }
-        .card {
-            background: white; width: 100%; max-width: 480px;
-            border-radius: 32px; box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-            overflow: hidden;
-        }
-        .container { padding: 28px 24px 32px; }
-        .title { font-size: 2rem; font-weight: 700; color: #0f172a; text-align: center; }
-        .sub { text-align: center; color: #475569; font-weight: 500; margin: 4px 0 28px; font-size: 0.9rem; }
-        .list-btn {
-            width: 100%; background: white; border: 1.5px solid #2563eb;
-            border-radius: 60px; padding: 16px 20px; margin-bottom: 14px;
-            text-align: center; font-weight: 700; font-size: 1.2rem;
-            color: #1e40af; cursor: pointer; transition: 0.15s;
-        }
-        .list-btn:hover { background: #eff6ff; transform: translateY(-1px); }
-        .badge { display: block; font-size: 0.7rem; font-weight: normal; color: #64748b; margin-top: 6px; }
-        .score { background: #eef2ff; padding: 12px; border-radius: 40px; text-align: center; font-weight: 600; margin-bottom: 24px; font-size: 0.9rem; color: #2563eb; }
-        .verb-card { background: #2563eb; color: white; padding: 30px 15px; border-radius: 28px; font-size: 1.8rem; font-weight: 700; text-align: center; margin-bottom: 12px; }
-        .meaning { text-align: center; font-style: italic; color: #334155; margin-bottom: 24px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .opt { background: white; border: 1.5px solid #cbd5e1; padding: 14px; border-radius: 60px; font-weight: 600; cursor: pointer; font-size: 1rem; transition: 0.2s; }
-        .correct { background: #16a34a !important; border-color: #16a34a !important; color: white !important; }
-        .wrong { background: #dc2626 !important; border-color: #dc2626 !important; color: white !important; }
-        .example { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 15px; border-radius: 16px; margin-top: 15px; display: none; }
-        .next { background: #0f172a; color: white; border: none; width: 100%; padding: 16px; border-radius: 60px; font-weight: bold; margin-top: 18px; cursor: pointer; display: none; }
-        .result-buttons { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
-        .res-btn { padding: 14px; border-radius: 60px; font-weight: 600; cursor: pointer; border: none; transition: 0.2s; }
-        .home-btn { background: #1e293b; color: white; }
-        .retry-btn { background: #ea580c; color: white; }
-        .hidden { display: none !important; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>German Verb Master - 50 Verbs</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+background: #f1f5f9;
+font-family: system-ui, -apple-system, sans-serif;
+display: flex; justify-content: center; align-items: center;
+min-height: 100vh; padding: 20px;
+}
+.card {
+background: white; width: 100%; max-width: 480px;
+border-radius: 32px; box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+overflow: hidden;
+}
+.container { padding: 28px 24px 32px; }
+.title { font-size: 2rem; font-weight: 700; color: #0f172a; text-align: center; }
+.sub { text-align: center; color: #475569; font-weight: 500; margin: 4px 0 28px; font-size: 0.9rem; }
+.list-btn {
+width: 100%; background: white; border: 1.5px solid #2563eb;
+border-radius: 60px; padding: 16px 20px; margin-bottom: 14px;
+text-align: center; font-weight: 700; font-size: 1.2rem;
+color: #1e40af; cursor: pointer; transition: 0.15s;
+}
+.list-btn:hover { background: #eff6ff; transform: translateY(-1px); }
+.badge { display: block; font-size: 0.7rem; font-weight: normal; color: #64748b; margin-top: 6px; }
+.score { background: #eef2ff; padding: 12px; border-radius: 40px; text-align: center; font-weight: 600; margin-bottom: 24px; font-size: 0.9rem; color: #2563eb; }
+.verb-card { background: #2563eb; color: white; padding: 30px 15px; border-radius: 28px; font-size: 1.8rem; font-weight: 700; text-align: center; margin-bottom: 12px; }
+.meaning { text-align: center; font-style: italic; color: #334155; margin-bottom: 24px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.opt { background: white; border: 1.5px solid #cbd5e1; padding: 14px; border-radius: 60px; font-weight: 600; cursor: pointer; font-size: 1rem; transition: 0.2s; }
+.correct { background: #16a34a !important; border-color: #16a34a !important; color: white !important; }
+.wrong { background: #dc2626 !important; border-color: #dc2626 !important; color: white !important; }
+.example { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 15px; border-radius: 16px; margin-top: 15px; display: none; }
+.next { background: #0f172a; color: white; border: none; width: 100%; padding: 16px; border-radius: 60px; font-weight: bold; margin-top: 18px; cursor: pointer; display: none; }
+.result-buttons { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+.res-btn { padding: 14px; border-radius: 60px; font-weight: 600; cursor: pointer; border: none; transition: 0.2s; }
+.home-btn { background: #1e293b; color: white; }
+.retry-btn { background: #ea580c; color: white; }
+.hidden { display: none !important; }
+</style>
 </head>
 <body>
 <div class="card">
-    <div class="container">
-        <div id="home">
-            <div class="title">🇩🇪 Verb Master</div>
-            <div class="sub">Präpositionen: Akk / Dat</div>
-            <div class="list-btn" onclick="startQuiz('first')">📘 Liste 1 – Basic<span class="badge">warten · denken · teilnehmen</span></div>
-            <div class="list-btn" onclick="startQuiz('second')">📗 Liste 2 – Advanced<span class="badge">sich einigen · ankommen · sich erinnern</span></div>
-            <footer style="text-align: center; font-size: 0.7rem; color: #94a3b8; margin-top: 20px;">Fixed Prepositions Quiz v2.0</footer>
-        </div>
+<div class="container">
+<div id="home">
+<div class="title">🇩🇪 Verb Master</div>
+<div class="sub">Präpositionen: Akk / Dat</div>
+<div class="list-btn" onclick="startQuiz('first')">📘 Liste 1 – Basic<span class="badge">warten · denken · teilnehmen</span></div>
+<div class="list-btn" onclick="startQuiz('second')">📗 Liste 2 – Advanced<span class="badge">sich einigen · ankommen · sich erinnern</span></div>
+<footer style="text-align: center; font-size: 0.7rem; color: #94a3b8; margin-top: 20px;">Fixed Prepositions Quiz v3.0</footer>
+</div>
 
-        <div id="quiz" class="hidden">
-            <div id="scoreText" class="score">Correct: 0 / 0</div>
-            <div id="verb" class="verb-card">-</div>
-            <div id="mean" class="meaning"></div>
-            <div id="options" class="grid"></div>
-            <div id="fb" style="text-align:center; margin: 15px 0; font-weight: 700;"></div>
-            <div id="exampleBox" class="example"><div id="exDe" style="font-weight:600;"></div><div id="exEn" style="font-size:0.8rem; color:#475569; margin-top:5px;"></div></div>
-            <button id="nextBtn" class="next">NÄCHSTE FRAGE →</button>
+    <div id="quiz" class="hidden">
+        <div id="scoreText" class="score">Soru: 0 / 0 | Doğru: 0</div>
+        <div id="verb" class="verb-card">-</div>
+        <div id="mean" class="meaning"></div>
+        <div id="options" class="grid"></div>
+        <div id="fb" style="text-align:center; margin: 15px 0; font-weight: 700;"></div>
+        <div id="exampleBox" class="example">
+            <div id="exDe" style="font-weight:600;"></div>
+            <div id="exEn" style="font-size:0.8rem; color:#475569; margin-top:5px;"></div>
         </div>
+        <button id="nextBtn" class="next">NÄCHSTE FRAGE →</button>
+    </div>
 
-        <div id="result" class="hidden">
-            <div class="title">Abgeschlossen! 🎉</div>
-            <div id="finalScore" style="
+    <div id="result" class="hidden">
+        <div class="title">Abgeschlossen! 🎉</div>
+        <div id="finalScore" style="font-size:2.5rem; text-align:center; margin:20px 0; color:#2563eb;"></div>
+        <div class="result-buttons">
+            <button onclick="location.reload()" class="res-btn home-btn">ANA MENÜ</button>
+            <button id="retryMistakes" class="res-btn retry-btn">HATALARI TEKRARLA</button>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+const list1 = [
+{f:"warten", p:"auf", k:"Akk", t:"to wait for", ex_de:"Ich warte auf dich.", ex_en:"I am waiting for you."},
+{f:"denken", p:"an", k:"Akk", t:"to think of", ex_de:"Ich denke an meine Zukunft.", ex_en:"I am thinking about my future."},
+{f:"glauben", p:"an", k:"Akk", t:"to believe in", ex_de:"Er glaubt an Gott.", ex_en:"He believes in God."},
+{f:"teilnehmen", p:"an", k:"Dat", t:"to participate in", ex_de:"Nimmst du an dem Kurs teil?", ex_en:"Are you participating in the course?"},
+{f:"sich freuen", p:"auf", k:"Akk", t:"to look forward to", ex_de:"Ich freue mich auf die Ferien.", ex_en:"I'm looking forward to the holidays."},
+{f:"sprechen", p:"über", k:"Akk", t:"to talk about", ex_de:"Wir sprechen über den Film.", ex_en:"We are talking about the movie."},
+{f:"interessieren", p:"für", k:"Akk", t:"to be interested in", ex_de:"Ich interessiere mich für Kunst.", ex_en:"I am interested in art."},
+{f:"sorgen", p:"für", k:"Akk", t:"to care for", ex_de:"Ich sorge für meine Mutter.", ex_en:"I take care of my mother."},
+{f:"suchen", p:"nach", k:"Dat", t:"to search for", ex_de:"Ich suche nach meinem Schlüssel.", ex_en:"I am looking for my key."},
+{f:"antworten", p:"auf", k:"Akk", t:"to answer", ex_de:"Er antwortet auf die Frage.", ex_en:"He answers the question."},
+{f:"arbeiten", p:"an", k:"Dat", t:"to work on", ex_de:"Ich arbeite an einem Projekt.", ex_en:"I am working on a project."},
+{f:"bitten", p:"um", k:"Akk", t:"to ask for", ex_de:"Darf ich dich um Hilfe bitten?", ex_en:"May I ask you for help?"},
+{f:"danken", p:"für", k:"Akk", t:"to thank for", ex_de:"Ich danke dir für das Geschenk.", ex_en:"I thank you for the gift."},
+{f:"diskutieren", p:"über", k:"Akk", t:"to discuss", ex_de:"Wir diskutieren über Politik.", ex_en:"We are discussing politics."},
+{f:"einladen", p:"zu", k:"Dat", t:"to invite to", ex_de:"Ich lade dich zu meiner Party ein.", ex_en:"I invite you to my party."},
+{f:"erinnern", p:"an", k:"Akk", t:"to remind of", ex_de:"Erinnere mich bitte an den Termin.", ex_en:"Please remind me of the appointment."},
+{f:"erzählen", p:"von", k:"Dat", t:"to tell about", ex_de:"Erzähl mir von deinem Urlaub.", ex_en:"Tell me about your vacation."},
+{f:"hoffen", p:"auf", k:"Akk", t:"to hope for", ex_de:"Wir hoffen auf besseres Wetter.", ex_en:"We hope for better weather."},
+{f:"nachdenken", p:"über", k:"Akk", t:"to reflect on", ex_de:"Ich muss über das Angebot nachdenken.", ex_en:"I need to think about the offer."},
+{f:"träumen", p:"von", k:"Dat", t:"to dream of", ex_de:"Ich träume von einem house am Meer.", ex_en:"I dream of a house by the sea."},
+{f:"sich verlieben", p:"in", k:"Akk", t:"to fall in love with", ex_de:"Er hat sich in sie verliebt.", ex_en:"He fell in love with her."},
+{f:"gratulieren", p:"zu", k:"Dat", t:"to congratulate on", ex_de:"Ich gratuliere dir zum Geburtstag.", ex_en:"I congratulate you on your birthday."},
+{f:"helfen", p:"bei", k:"Dat", t:"to help with", ex_de:"Kannst du mir beim Kochen helfen?", ex_en:"Can you help me with cooking?"},
+{f:"sich kümmern", p:"um", k:"Akk", t:"to take care of", ex_de:"Kümmere dich um deine Sachen.", ex_en:"Take care of your things."},
+{f:"passen", p:"auf", k:"Akk", t:"to watch", ex_de:"Pass auf die Kinder auf.", ex_en:"Watch the children."}
+];
+
+const list2 = [
+    {f:&quot;ankommen&quot;, p:&quot;auf&quot;, k:&quot;Akk&quot;, t:&quot;to depend on&quot;, ex_de:&quot;Es kommt auf die Übung an.&quot;, ex_en:&quot;It depends on the exercise.&quot;},
+    {f:&quot;aufhören&quot;, p:&quot;mit&quot;, k:&quot;Dat&quot;, t:&quot;to stop&quot;, ex_de:&quot;Hör mit dem Lärm auf!&quot;, ex_en:&quot;Stop the noise!&quot;},
+    {f:&quot;ausgehen&quot;, p:&quot;von&quot;, k:&quot;Dat&quot;, t:&quot;to assume&quot;, ex_de:&quot;Ich gehe von deiner Ehrlichkeit aus.&quot;, ex_en:&quot;I assume your honesty.&quot;},
+    {f:&quot;bestehen&quot;, p:&quot;aus&quot;, k:&quot;Dat&quot;, t:&quot;to consist of&quot;, ex_de:&quot;Das besteht aus drei Teilen.&quot;, ex_en:&quot;It consists of three parts.&quot;},
+    {f:&quot;bestehen&quot;, p:&quot;auf&quot;, k:&quot;Dat&quot;, t:&quot;to insist on&quot;, ex_de:&quot;Er besteht auf seinem Recht.&quot;, ex_en:&quot;He insists on his right.&quot;},
+    {f:&quot;sich einigen&quot;, p:&quot;auf&quot;, k:&quot;Akk&quot;, t:&quot;to agree on&quot;, ex_de:&quot;Wir einigen uns auf einen Termin.&quot;, ex_en:&quot;We agree on a date.&quot;},
+    {f:&quot;sich entscheiden&quot;, p:&quot;für&quot;, k:&quot;Akk&quot;, t:&quot;to decide for&quot;, ex_de:&quot;Ich entscheide mich für das Rote.&quot;, ex_en:&quot;I decide for the red one.&quot;},
+    {f:&quot;sich entschuldigen&quot;, p:&quot;bei&quot;, k:&quot;Dat&quot;, t:&quot;to apologize to&quot;, ex_de:&quot;Entschuldige dich bei ihr.&quot;, ex_en:&quot;Apologize to her.&quot;},
+    {f:&quot;sich erinnern&quot;, p:&quot;an&quot;, k:&quot;Akk&quot;, t:&quot;to remember&quot;, ex_de:&quot;Erinnerst du dich an mich?&quot;, ex_en:&quot;Do you remember me?&quot;},
+    {f:&quot;fahren&quot;, p:&quot;mit&quot;, k:&quot;Dat&quot;, t:&quot;to go by&quot;, ex_de:&quot;Ich fahre mit dem Bus.&quot;, ex_en:&quot;I go by bus.&quot;},
+    {f:&quot;fragen&quot;, p:&quot;nach&quot;, k:&quot;Dat&quot;, t:&quot;to ask for&quot;, ex_de:&quot;Er fragt nach dem Weg.&quot;, ex_en:&quot;He asks for the way.&quot;},
+    {f:&quot;gehören&quot;, p:&quot;zu&quot;, k:&quot;Dat&quot;, t:&quot;to belong to&quot;, ex_de:&quot;Das gehört zu mir.&quot;, ex_en:&quot;That belongs to me.&quot;},
+    {f:&quot;sich gewöhnen&quot;, p:&quot;an&quot;, k:&quot;Akk&quot;, t:&quot;to get used to&quot;, ex_de:&quot;Ich gewöhne mich an das Wetter.&quot;, ex_en:&quot;I get used to the weather.&quot;},
+    {f:&quot;handeln&quot;, p:&quot;von&quot;, k:&quot;Dat&quot;, t:&quot;to be about&quot;, ex_de:&quot;Der Film handelt von der Liebe.&quot;, ex_en:&quot;The movie is about love.&quot;},
+    {f:&quot;sich kümmern&quot;, p:&quot;um&quot;, k:&quot;Akk&quot;, t:&quot;to take care of&quot;, ex_de:&quot;Kümmere dich um die Blumen.&quot;, ex_en:&quot;Take care of the flowers.&quot;},
+    {f:&quot;nachdenken&quot;, p:&quot;über&quot;, k:&quot;Akk&quot;, t:&quot;to reflect on&quot;, ex_de:&quot;Ich denke über das Problem nach.&quot;, ex_en:&quot;I reflect on the problem.&quot;},
+    {f:&quot;passieren&quot;, p:&quot;mit&quot;, k:&quot;Dat&quot;, t:&quot;to happen to&quot;, ex_de:&quot;Was ist mit dir passiert?&quot;, ex_en:&quot;What happened to you?&quot;},
+    {f:&quot;sprechen&quot;, p:&quot;mit&quot;, k:&quot;Dat&quot;, t:&quot;to speak with&quot;, ex_de:&quot;Ich spreche mit dir.&quot;, ex_en:&quot;I speak with you.&quot;},
+    {f:&quot;sterben&quot;, p:&quot;an&quot;, k:&quot;Dat&quot;, t:&quot;to die of&quot;, ex_de:&quot;Er ist an Krebs gestorben.&quot;, ex_en:&quot;He died of cancer.&quot;},
+    {f:&quot;sich verlieben&quot;, p:&quot;in&quot;, k:&quot;Akk&quot;, t:&quot;to fall in love with&quot;, ex_de:&quot;Sie verliebt sich in ihn.&quot;, ex_en:&quot;She falls in love with him.&quot;},
+    {f:&quot;sich vorbereiten&quot;, p:&quot;auf&quot;, k:&quot;Akk&quot;, t:&quot;to prepare for&quot;, ex_de:&quot;Ich bereite mich auf die Prüfung vor.&quot;, ex_en:&quot;I prepare for the exam.&quot;},
+    {f:&quot;zögern&quot;, p:&quot;mit&quot;, k:&quot;Dat&quot;, t:&quot;to hesitate with&quot;, ex_de:&quot;Zögere nicht mit deiner Antwort.&quot;, ex_en:&quot;Don&#39;t hesitate with your answer.&quot;},
+    {f:&quot;sich ärgern&quot;, p:&quot;über&quot;, k:&quot;Akk&quot;, t:&quot;to be angry about&quot;, ex_de:&quot;Ich ärgere mich über den Stau.&quot;, ex_en:&quot;I&#39;m angry about the traffic.&quot;},
+    {f:&quot;sich freuen&quot;, p:&quot;über&quot;, k:&quot;Akk&quot;, t:&quot;to be happy about&quot;, ex_de:&quot;Ich freue mich über das Geschenk.&quot;, ex_en:&quot;I&#39;m happy about the gift.&quot;},
+    {f:&quot;sich treffen&quot;, p:&quot;mit&quot;, k:&quot;Dat&quot;, t:&quot;to meet with&quot;, ex_de:&quot;Ich treffe mich mit Maria.&quot;, ex_en:&quot;I&#39;m meeting with Maria.&quot;}
+];
+
+let activeQuestions = [], errorItems = [], qIndex = 0, correct = 0;
+const prepsPool = [&quot;an&quot;,&quot;auf&quot;,&quot;für&quot;,&quot;von&quot;,&quot;mit&quot;,&quot;um&quot;,&quot;über&quot;,&quot;in&quot;,&quot;nach&quot;,&quot;zu&quot;,&quot;bei&quot;,&quot;aus&quot;];
+
+function startQuiz(listType) {
+    const list = (listType === &#39;first&#39;) ? list1 : list2;
+    activeQuestions = [...list].sort(() =&gt; Math.random() - 0.5);
+    errorItems = []; qIndex = 0; correct = 0;
+    document.getElementById(&#39;home&#39;).classList.add(&#39;hidden&#39;);
+    document.getElementById(&#39;quiz&#39;).classList.remove(&#39;hidden&#39;);
+    document.getElementById(&#39;result&#39;).classList.add(&#39;hidden&#39;);
+    showQuestion();
+}
+
+function showQuestion() {
+    if(qIndex &gt;= activeQuestions.length) { showResult(); return; }
+    const item = activeQuestions[qIndex];
+    document.getElementById(&#39;verb&#39;).innerText = item.f;
+    document.getElementById(&#39;mean&#39;).innerText = item.t;
+    document.getElementById(&#39;scoreText&#39;).innerText = `Soru: ${qIndex + 1} / ${activeQuestions.length} | Doğru: ${correct}`;
+    document.getElementById(&#39;fb&#39;).innerText = &quot;&quot;;
+    document.getElementById(&#39;exampleBox&#39;).style.display = &quot;none&quot;;
+    document.getElementById(&#39;nextBtn&#39;).style.display = &quot;none&quot;;
+    
+    let opts = [item.p];
+    while(opts.length &lt; 4) {
+        let r = prepsPool[Math.floor(Math.random()*prepsPool.length)];
+        if(!opts.includes(r)) opts.push(r);
+    }
+    opts.sort(() =&gt; Math.random() - 0.5);
+    
+    const grid = document.getElementById(&#39;options&#39;);
+    grid.innerHTML = &quot;&quot;;
+    opts.forEach(o =&gt; {
+        const b = document.createElement(&#39;button&#39;); b.className = &#39;opt&#39;; b.innerText = o;
+        b.onclick = () =&gt; check(o, item.p, b); grid.appendChild(b);
+    });
+}
+
+function check(selected, correctPrep, btn) {
+    document.querySelectorAll(&#39;.opt&#39;).forEach(b =&gt; b.disabled = true);
+    const item = activeQuestions[qIndex];
+    if(selected === correctPrep) {
+        btn.classList.add(&#39;correct&#39;); correct++;
+        document.getElementById(&#39;fb&#39;).innerHTML = `&lt;span style=&quot;color:#16a34a&quot;&gt;✅ Richtig! (${item.k})&lt;/span&gt;`;
+    } else {
+        btn.classList.add(&#39;wrong&#39;);
+        errorItems.push(item);
+        document.getElementById(&#39;fb&#39;).innerHTML = `&lt;span style=&quot;color:#dc2626&quot;&gt;❌ Falsch! Doğru: ${correctPrep} (${item.k})&lt;/span&gt;`;
+    }
+    document.getElementById(&#39;exDe&#39;).innerText = item.ex_de;
+    document.getElementById(&#39;exEn&#39;).innerText = item.ex_en;
+    document.getElementById(&#39;exampleBox&#39;).style.display = &quot;block&quot;;
+    document.getElementById(&#39;nextBtn&#39;).style.display = &quot;block&quot;;
+}
+
+document.getElementById(&#39;nextBtn&#39;).onclick = () =&gt; { qIndex++; showQuestion(); };
+
+function showResult() {
+    document.getElementById(&#39;quiz&#39;).classList.add(&#39;hidden&#39;);
+    document.getElementById(&#39;result&#39;).classList.remove(&#39;hidden&#39;);
+    document.getElementById(&#39;finalScore&#39;).innerText = `${correct} / ${activeQuestions.length}`;
+    document.getElementById(&#39;retryMistakes&#39;).style.display = (errorItems.length &gt; 0) ? &quot;block&quot; : &quot;none&quot;;
+}
+
+document.getElementById(&#39;retryMistakes&#39;).onclick = () =&gt; {
+    activeQuestions = [...errorItems].sort(() =&gt; Math.random() - 0.5);
+    errorItems = []; qIndex = 0; correct = 0;
+    document.getElementById(&#39;result&#39;).classList.add(&#39;hidden&#39;);
+    document.getElementById(&#39;quiz&#39;).classList.remove(&#39;hidden&#39;);
+    showQuestion();
+};
+</script>
+
+</body>
+</html>
