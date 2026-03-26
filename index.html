@@ -35,7 +35,8 @@
     <div id="res" class="hidden" style="text-align:center">
         <h2>Bitti! 🎉</h2>
         <h1 id="total"></h1>
-        <button class="btn" onclick="location.reload()">BAŞA DÖN</button>
+        <div id="retryArea"></div>
+        <button class="btn" onclick="location.reload()">ANA MENÜYE DÖN</button>
     </div>
 </div>
 
@@ -109,12 +110,17 @@
         ]
     };
 
-    let current = [], idx = 0, score = 0;
+    let current = [], idx = 0, score = 0, wrongList = [];
 
     function start(list) {
         current = [...data[list]].sort(() => Math.random() - 0.5);
-        idx = 0; score = 0;
+        resetQuiz();
+    }
+
+    function resetQuiz() {
+        idx = 0; score = 0; wrongList = [];
         document.getElementById('home').classList.add('hidden');
+        document.getElementById('res').classList.add('hidden');
         document.getElementById('quiz').classList.remove('hidden');
         show();
     }
@@ -143,8 +149,13 @@
 
     function check(btn, sel, cor) {
         document.querySelectorAll('.opt').forEach(b => b.disabled = true);
-        if(sel === cor) { btn.classList.add('correct'); score++; }
-        else { btn.classList.add('wrong'); }
+        if(sel === cor) { 
+            btn.classList.add('correct'); 
+            score++; 
+        } else { 
+            btn.classList.add('wrong'); 
+            wrongList.push(current[idx]);
+        }
         document.getElementById('ex').innerText = current[idx].t + ": " + current[idx].ex;
         document.getElementById('ex').classList.remove('hidden');
         document.getElementById('next').classList.remove('hidden');
@@ -153,10 +164,27 @@
     function nextQ() {
         idx++;
         if(idx < current.length) show();
-        else {
-            document.getElementById('quiz').classList.add('hidden');
-            document.getElementById('res').classList.remove('hidden');
-            document.getElementById('total').innerText = score + " / " + current.length;
+        else finish();
+    }
+
+    function finish() {
+        document.getElementById('quiz').classList.add('hidden');
+        document.getElementById('res').classList.remove('hidden');
+        document.getElementById('total').innerText = score + " / " + current.length;
+        
+        const retryArea = document.getElementById('retryArea');
+        retryArea.innerHTML = ""; // Önceki butonları temizle
+
+        if(wrongList.length > 0) {
+            let retryBtn = document.createElement('button');
+            retryBtn.className = "btn";
+            retryBtn.style.background = "#ea580c"; // Turuncu renkli hata butonu
+            retryBtn.innerText = "SADECE HATALARI TEKRARLA (" + wrongList.length + ")";
+            retryBtn.onclick = function() {
+                current = [...wrongList].sort(() => Math.random() - 0.5);
+                resetQuiz();
+            };
+            retryArea.appendChild(retryBtn);
         }
     }
 </script>
