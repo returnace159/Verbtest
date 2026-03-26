@@ -146,19 +146,20 @@ if(typeof buildMenu === "function") buildMenu();
         document.getElementById('ex-box').classList.add('hidden');
         document.getElementById('next').classList.add('hidden');
         
-        let pool = ["auf", "an", "mit", "von", "in", "über", "zu", "für", "nach", "um", "vor", "bei", "aus", "gegen"];
-        let opts = [q.p];
-        while(opts.length < 4) {
-            let r = pool[Math.floor(Math.random() * pool.length)];
-            if(!opts.includes(r)) opts.push(r);
-        }
-        opts.sort(() => Math.random() - 0.5);
+        // Havuzdan doğru cevabı hariç tutarak rastgele 3 yanlış seçenek seçer
+        let pool = ["auf", "an", "mit", "von", "in", "über", "zu", "für", "nach", "um", "vor", "bei", "aus", "gegen"]
+                   .filter(p => p !== q.p); // Doğru cevabı havuzdan çıkar
+        
+        // Havuzu karıştır ve ilk 3 tanesini al
+        let wrongOpts = pool.sort(() => Math.random() - 0.5).slice(0, 3);
+        
+        // Doğru cevapla birleştir ve hepsini tekrar karıştır
+        let finalOpts = [q.p, ...wrongOpts].sort(() => Math.random() - 0.5);
 
-        document.getElementById('options').innerHTML = opts.map(o => 
+        document.getElementById('options').innerHTML = finalOpts.map(o => 
             `<button class="btn opt" onclick="check(this, '${o}', '${q.p}')">${o}</button>`
         ).join('');
     }
-
     function check(btn, sel, cor) {
         document.querySelectorAll('.opt').forEach(b => b.disabled = true);
         const q = current[idx];
