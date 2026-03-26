@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html lang="de">
@@ -21,9 +20,9 @@ body { font-family: sans-serif; background: #f0f4f8; display: flex; justify-cont
 <div class="card">
 <div id="home">
 <h2 style="text-align:center">🇩🇪 Verb Master (60 Verbs)</h2>
-<button class="btn" onclick="start('A')">LİSTE 1 (Temel 20)</button>
-<button class="btn" onclick="start('B')">LİSTE 2 (Orta 20)</button>
-<button class="btn" onclick="start('C')">LİSTE 3 (İleri 20)</button>
+<button class="btn" onclick="startTest('A')">LİSTE 1 (Temel 20)</button>
+<button class="btn" onclick="startTest('B')">LİSTE 2 (Orta 20)</button>
+<button class="btn" onclick="startTest('C')">LİSTE 3 (İleri 20)</button>
 </div>
 
 <div id="quiz" class="hidden">
@@ -68,11 +67,11 @@ A: [
 B: [
 {f:"sich bewerben", p:"um", t:"başvurmak (Akk)", ex:"Ich bewerbe mich um den Job."},
 {f:"sich entscheiden", p:"für", t:"karar vermek (Akk)", ex:"Ich entscheide mich für dich."},
-{f:"sich verlieben", p:"in", t:"aşık olmak (Akk)", ex:"Er hat sich in sie verliebt."},
+{f:"sich verlieben", p:"in", t:"aşık olmak (Akk)", ex:"Er hat sich in sie veriliebt."},
 {f:"sich vorbereiten", p:"auf", t:"hazırlanmak (Akk)", ex:"Bereitest du dich auf den Test vor?"},
 {f:"träumen", p:"von", t:"hayal etmek (Dat)", ex:"Ich träume von einem Haus."},
 {f:"sich gewöhnen", p:"an", t:"alışmak (Akk)", ex:"Ich gewöhne mich an die Kälte."},
-{f:"hoffen", p:"auf", t:"ummak (Akk)", ex:"Wir hoffen auf eine Antwort."},
+{f:"hoffen", p:"auf", t:"ummak (Akk)", ex:"Wir hofen auf eine Antwort."},
 {f:"schreiben", p:"an", t:"yazmak (Akk)", ex:"Ich schreibe an meine Mutter."},
 {f:"sich beklagen", p:"über", t:"şikayet etmek (Akk)", ex:"Er beklagt sich über den Lärm."},
 {f:"sich informieren", p:"über", t:"bilgi almak (Akk)", ex:"Informier dich über den Kurs."},
@@ -113,8 +112,9 @@ C: [
 
 let current = [], idx = 0, score = 0;
 
-function start(list) {
-    current = [...data[list]].sort(() =&gt; Math.random() - 0.5);
+function startTest(listKey) {
+    if (!data[listKey]) return;
+    current = JSON.parse(JSON.stringify(data[listKey])).sort(() =&gt; Math.random() - 0.5);
     idx = 0; score = 0;
     document.getElementById(&#39;home&#39;).classList.add(&#39;hidden&#39;);
     document.getElementById(&#39;quiz&#39;).classList.remove(&#39;hidden&#39;);
@@ -138,12 +138,12 @@ function show() {
 
     let html = &quot;&quot;;
     opts.forEach(o =&gt; {
-        html += `&lt;button class=&quot;btn opt&quot; onclick=&quot;check(this, &#39;${o}&#39;, &#39;${q.p}&#39;)&quot;&gt;${o}&lt;/button&gt;`;
+        html += `&lt;button class=&quot;btn opt&quot; onclick=&quot;checkAnswer(this, &#39;${o}&#39;, &#39;${q.p}&#39;)&quot;&gt;${o}&lt;/button&gt;`;
     });
     document.getElementById(&#39;options&#39;).innerHTML = html;
 }
 
-function check(btn, sel, cor) {
+function checkAnswer(btn, sel, cor) {
     document.querySelectorAll(&#39;.opt&#39;).forEach(b =&gt; b.disabled = true);
     if(sel === cor) { btn.classList.add(&#39;correct&#39;); score++; }
     else { btn.classList.add(&#39;wrong&#39;); }
@@ -155,8 +155,9 @@ function check(btn, sel, cor) {
 
 function nextQ() {
     idx++;
-    if(idx &lt; current.length) show();
-    else {
+    if(idx &lt; current.length) {
+        show();
+    } else {
         document.getElementById(&#39;quiz&#39;).classList.add(&#39;hidden&#39;);
         document.getElementById(&#39;res&#39;).classList.remove(&#39;hidden&#39;);
         document.getElementById(&#39;total&#39;).innerText = `${score} / ${current.length}`;
