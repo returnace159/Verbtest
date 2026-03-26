@@ -1,186 +1,47 @@
-```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>German Verb Master</title>
+    <title>German Verb Master - 50 Verbs</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #f1f5f9;
-            font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; padding: 20px;
         }
         .card {
-            background: white;
-            width: 100%;
-            max-width: 480px;
-            border-radius: 32px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            background: white; width: 100%; max-width: 480px;
+            border-radius: 32px; box-shadow: 0 12px 30px rgba(0,0,0,0.08);
             overflow: hidden;
         }
-        .container {
-            padding: 28px 24px 32px;
-        }
-        .title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #0f172a;
-            text-align: center;
-        }
-        .sub {
-            text-align: center;
-            color: #475569;
-            font-weight: 500;
-            margin-top: 4px;
-            margin-bottom: 28px;
-            font-size: 0.9rem;
-        }
+        .container { padding: 28px 24px 32px; }
+        .title { font-size: 2rem; font-weight: 700; color: #0f172a; text-align: center; }
+        .sub { text-align: center; color: #475569; font-weight: 500; margin: 4px 0 28px; font-size: 0.9rem; }
         .list-btn {
-            width: 100%;
-            background: white;
-            border: 1.5px solid #2563eb;
-            border-radius: 60px;
-            padding: 16px 20px;
-            margin-bottom: 14px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: #1e40af;
-            cursor: pointer;
-            transition: 0.15s;
+            width: 100%; background: white; border: 1.5px solid #2563eb;
+            border-radius: 60px; padding: 16px 20px; margin-bottom: 14px;
+            text-align: center; font-weight: 700; font-size: 1.2rem;
+            color: #1e40af; cursor: pointer; transition: 0.15s;
         }
-        .list-btn:hover {
-            background: #eff6ff;
-        }
-        .badge {
-            display: block;
-            font-size: 0.7rem;
-            font-weight: normal;
-            color: #334155;
-            margin-top: 6px;
-        }
-        .info {
-            background: #f8fafc;
-            padding: 14px;
-            border-radius: 20px;
-            margin-top: 24px;
-            font-size: 0.75rem;
-            color: #334155;
-            text-align: center;
-        }
-        .hidden {
-            display: none;
-        }
-        .score {
-            background: #eef2ff;
-            padding: 12px;
-            border-radius: 40px;
-            text-align: center;
-            font-weight: 600;
-            margin-bottom: 24px;
-            font-size: 0.9rem;
-        }
-        .verb-card {
-            background: #2563eb;
-            color: white;
-            padding: 28px 12px;
-            border-radius: 28px;
-            font-size: 1.8rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 12px;
-        }
-        .meaning {
-            text-align: center;
-            font-style: italic;
-            color: #334155;
-            margin-bottom: 24px;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .opt {
-            background: white;
-            border: 1.5px solid #cbd5e1;
-            padding: 14px;
-            border-radius: 60px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: monospace;
-            font-size: 1rem;
-        }
-        .opt:hover {
-            background: #f1f5f9;
-        }
-        .correct {
-            background: #16a34a !important;
-            border-color: #16a34a !important;
-            color: white !important;
-        }
-        .wrong {
-            background: #dc2626 !important;
-            border-color: #dc2626 !important;
-            color: white !important;
-        }
-        .feedback {
-            text-align: center;
-            margin: 16px 0 8px;
-            font-weight: 600;
-        }
-        .example {
-            background: #f0fdf4;
-            border-left: 4px solid #16a34a;
-            padding: 12px;
-            border-radius: 16px;
-            margin-top: 12px;
-            display: none;
-        }
-        .next {
-            background: #2563eb;
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 14px;
-            border-radius: 60px;
-            font-weight: bold;
-            margin-top: 18px;
-            cursor: pointer;
-            display: none;
-        }
-        .result-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 24px;
-        }
-        .home-btn, .retry-btn, .switch-btn {
-            padding: 14px;
-            border-radius: 60px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-        }
+        .list-btn:hover { background: #eff6ff; transform: translateY(-1px); }
+        .badge { display: block; font-size: 0.7rem; font-weight: normal; color: #64748b; margin-top: 6px; }
+        .score { background: #eef2ff; padding: 12px; border-radius: 40px; text-align: center; font-weight: 600; margin-bottom: 24px; font-size: 0.9rem; color: #2563eb; }
+        .verb-card { background: #2563eb; color: white; padding: 30px 15px; border-radius: 28px; font-size: 1.8rem; font-weight: 700; text-align: center; margin-bottom: 12px; }
+        .meaning { text-align: center; font-style: italic; color: #334155; margin-bottom: 24px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .opt { background: white; border: 1.5px solid #cbd5e1; padding: 14px; border-radius: 60px; font-weight: 600; cursor: pointer; font-size: 1rem; transition: 0.2s; }
+        .correct { background: #16a34a !important; border-color: #16a34a !important; color: white !important; }
+        .wrong { background: #dc2626 !important; border-color: #dc2626 !important; color: white !important; }
+        .example { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 15px; border-radius: 16px; margin-top: 15px; display: none; }
+        .next { background: #0f172a; color: white; border: none; width: 100%; padding: 16px; border-radius: 60px; font-weight: bold; margin-top: 18px; cursor: pointer; display: none; }
+        .result-buttons { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+        .res-btn { padding: 14px; border-radius: 60px; font-weight: 600; cursor: pointer; border: none; transition: 0.2s; }
         .home-btn { background: #1e293b; color: white; }
         .retry-btn { background: #ea580c; color: white; }
-        .switch-btn { background: #16a34a; color: white; }
-        footer {
-            text-align: center;
-            font-size: 0.65rem;
-            margin-top: 24px;
-            color: #94a3b8;
-        }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
@@ -188,20 +49,10 @@
     <div class="container">
         <div id="home">
             <div class="title">🇩🇪 Verb Master</div>
-            <div class="sub">prefix + accusative / dative</div>
-            <div class="list-btn" data-list="first">
-                📘 List 1 – 25 Verbs
-                <span class="badge">warten · denken · teilnehmen</span>
-            </div>
-            <div class="list-btn" data-list="second">
-                📗 List 2 – 25 Verbs
-                <span class="badge">ankommen · bestehen · sich einigen</span>
-            </div>
-            <div class="info">
-                25 questions · choose the correct prefix (Akk/Dat)<br>
-                After quiz: back to menu or try the other list
-            </div>
-            <footer>German verbs with fixed prepositions | Akkusativ / Dativ</footer>
+            <div class="sub">Präpositionen: Akk / Dat</div>
+            <div class="list-btn" onclick="startQuiz('first')">📘 Liste 1 – Basic<span class="badge">warten · denken · teilnehmen</span></div>
+            <div class="list-btn" onclick="startQuiz('second')">📗 Liste 2 – Advanced<span class="badge">sich einigen · ankommen · sich erinnern</span></div>
+            <footer style="text-align: center; font-size: 0.7rem; color: #94a3b8; margin-top: 20px;">Fixed Prepositions Quiz v2.0</footer>
         </div>
 
         <div id="quiz" class="hidden">
@@ -209,223 +60,11 @@
             <div id="verb" class="verb-card">-</div>
             <div id="mean" class="meaning"></div>
             <div id="options" class="grid"></div>
-            <div id="fb" class="feedback"></div>
-            <div id="exampleBox" class="example">
-                <div id="exDe"></div>
-                <div id="exEn" style="font-size:0.75rem; margin-top:4px;"></div>
-            </div>
-            <button id="nextBtn" class="next">Next →</button>
+            <div id="fb" style="text-align:center; margin: 15px 0; font-weight: 700;"></div>
+            <div id="exampleBox" class="example"><div id="exDe" style="font-weight:600;"></div><div id="exEn" style="font-size:0.8rem; color:#475569; margin-top:5px;"></div></div>
+            <button id="nextBtn" class="next">NÄCHSTE FRAGE →</button>
         </div>
 
         <div id="result" class="hidden">
-            <div class="title">Quiz Completed</div>
-            <div id="finalScore" style="font-size:1.6rem; font-weight:bold; text-align:center; margin:20px 0;"></div>
-            <div class="result-buttons">
-                <button id="homeBtn" class="home-btn">Back to Menu</button>
-                <button id="retryMistakes" class="retry-btn">Retry Mistakes</button>
-                <button id="switchList" class="switch-btn">Other List</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    const list1 = [
-        {f:"warten", p:"auf", k:"Akk", t:"to wait for", ex_de:"Ich warte auf dich.", ex_en:"I am waiting for you."},
-        {f:"denken", p:"an", k:"Akk", t:"to think of", ex_de:"Ich denke an meine Zukunft.", ex_en:"I am thinking about my future."},
-        {f:"glauben", p:"an", k:"Akk", t:"to believe in", ex_de:"Er glaubt an Gott.", ex_en:"He believes in God."},
-        {f:"teilnehmen", p:"an", k:"Dat", t:"to participate in", ex_de:"Nimmst du an dem Kurs teil?", ex_en:"Are you participating in the course?"},
-        {f:"sich freuen", p:"auf", k:"Akk", t:"to look forward to", ex_de:"Ich freue mich auf die Ferien.", ex_en:"I'm looking forward to the holidays."},
-        {f:"sprechen", p:"über", k:"Akk", t:"to talk about", ex_de:"Wir sprechen über den Film.", ex_en:"We are talking about the movie."},
-        {f:"interessieren", p:"für", k:"Akk", t:"to be interested in", ex_de:"Ich interessiere mich für Kunst.", ex_en:"I am interested in art."},
-        {f:"sorgen", p:"für", k:"Akk", t:"to care for", ex_de:"Ich sorge für meine Mutter.", ex_en:"I take care of my mother."},
-        {f:"suchen", p:"nach", k:"Dat", t:"to search for", ex_de:"Ich suche nach meinem Schlüssel.", ex_en:"I am looking for my key."},
-        {f:"antworten", p:"auf", k:"Akk", t:"to answer", ex_de:"Er antwortet auf die Frage.", ex_en:"He answers the question."},
-        {f:"arbeiten", p:"an", k:"Dat", t:"to work on", ex_de:"Ich arbeite an einem Projekt.", ex_en:"I am working on a project."},
-        {f:"bitten", p:"um", k:"Akk", t:"to ask for", ex_de:"Darf ich dich um Hilfe bitten?", ex_en:"May I ask you for help?"},
-        {f:"danken", p:"für", k:"Akk", t:"to thank for", ex_de:"Ich danke dir für das Geschenk.", ex_en:"I thank you for the gift."},
-        {f:"diskutieren", p:"über", k:"Akk", t:"to discuss", ex_de:"Wir diskutieren über Politik.", ex_en:"We are discussing politics."},
-        {f:"einladen", p:"zu", k:"Dat", t:"to invite to", ex_de:"Ich lade dich zu meiner Party ein.", ex_en:"I invite you to my party."},
-        {f:"erinnern", p:"an", k:"Akk", t:"to remind of", ex_de:"Erinnere mich bitte an den Termin.", ex_en:"Please remind me of the appointment."},
-        {f:"erzählen", p:"von", k:"Dat", t:"to tell about", ex_de:"Erzähl mir von deinem Urlaub.", ex_en:"Tell me about your vacation."},
-        {f:"hoffen", p:"auf", k:"Akk", t:"to hope for", ex_de:"Wir hoffen auf besseres Wetter.", ex_en:"We hope for better weather."},
-        {f:"nachdenken", p:"über", k:"Akk", t:"to reflect on", ex_de:"Ich muss über das Angebot nachdenken.", ex_en:"I need to think about the offer."},
-        {f:"träumen", p:"von", k:"Dat", t:"to dream of", ex_de:"Ich träume von einem Haus am Meer.", ex_en:"I dream of a house by the sea."},
-        {f:"verlieben", p:"in", k:"Akk", t:"to fall in love with", ex_de:"Er hat sich in sie verliebt.", ex_en:"He fell in love with her."},
-        {f:"gratulieren", p:"zu", k:"Dat", t:"to congratulate on", ex_de:"Ich gratuliere dir zum Geburtstag.", ex_en:"I congratulate you on your birthday."},
-        {f:"helfen", p:"bei", k:"Dat", t:"to help with", ex_de:"Kannst du mir beim Kochen helfen?", ex_en:"Can you help me with cooking?"},
-        {f:"sich kümmern", p:"um", k:"Akk", t:"to take care of", ex_de:"Kümmere dich um deine Sachen.", ex_en:"Take care of your things."},
-        {f:"passen", p:"auf", k:"Akk", t:"to watch / mind", ex_de:"Pass auf die Kinder auf.", ex_en:"Watch the children."}
-    ];
-
-    const list2 = [
-        {f:"ankommen", p:"auf", k:"Akk", t:"to depend on", ex_de:"Es kommt auf die Übung an.", ex_en:"It depends on the exercise."},
-        {f:"aufhören", p:"mit", k:"Dat", t:"to stop", ex_de:"Hör mit dem Lärm auf!", ex_en:"Stop the noise!"},
-        {f:"ausgehen", p:"von", k:"Dat", t:"to assume", ex_de:"Ich gehe von deiner Ehrlichkeit aus.", ex_en:"I assume your honesty."},
-        {f:"bestehen", p:"aus", k:"Dat", t:"to consist of", ex_de:"Das besteht aus drei Teilen.", ex_en:"It consists of three parts."},
-        {f:"bestehen", p:"auf", k:"Dat", t:"to insist on", ex_de:"Er besteht auf seinem Recht.", ex_en:"He insists on his right."},
-        {f:"einigen", p:"sich auf", k:"Akk", t:"to agree on", ex_de:"Wir einigen uns auf einen Termin.", ex_en:"We agree on a date."},
-        {f:"entscheiden", p:"sich für", k:"Akk", t:"to decide for", ex_de:"Ich entscheide mich für das Rote.", ex_en:"I decide for the red one."},
-        {f:"entschuldigen", p:"sich bei ... für", k:"Dat+Akk", t:"to apologize", ex_de:"Entschuldige dich bei ihr für den Fehler.", ex_en:"Apologize to her for the mistake."},
-        {f:"erinnern", p:"sich an", k:"Akk", t:"to remember", ex_de:"Erinnerst du dich an mich?", ex_en:"Do you remember me?"},
-        {f:"fahren", p:"mit", k:"Dat", t:"to go by", ex_de:"Ich fahre mit dem Bus.", ex_en:"I go by bus."},
-        {f:"fragen", p:"nach", k:"Dat", t:"to ask for", ex_de:"Er fragt nach dem Weg.", ex_en:"He asks for the way."},
-        {f:"gehören", p:"zu", k:"Dat", t:"to belong to", ex_de:"Das gehört zu mir.", ex_en:"That belongs to me."},
-        {f:"gewöhnen", p:"sich an", k:"Akk", t:"to get used to", ex_de:"Ich gewöhne mich an das Wetter.", ex_en:"I get used to the weather."},
-        {f:"handeln", p:"von", k:"Dat", t:"to be about", ex_de:"Der Film handelt von der Liebe.", ex_en:"The movie is about love."},
-        {f:"kümmern", p:"sich um", k:"Akk", t:"to take care of", ex_de:"Kümmere dich um die Blumen.", ex_en:"Take care of the flowers."},
-        {f:"nachdenken", p:"über", k:"Akk", t:"to reflect on", ex_de:"Ich denke über das Problem nach.", ex_en:"I reflect on the problem."},
-        {f:"passieren", p:"mit", k:"Dat", t:"to happen to", ex_de:"Was ist mit dir passiert?", ex_en:"What happened to you?"},
-        {f:"sprechen", p:"mit ... über", k:"Dat+Akk", t:"to speak with/about", ex_de:"Ich spreche mit dir über das Thema.", ex_en:"I speak with you about the topic."},
-        {f:"sterben", p:"an", k:"Dat", t:"to die of", ex_de:"Er ist an Krebs gestorben.", ex_en:"He died of cancer."},
-        {f:"teilnehmen", p:"an", k:"Dat", t:"to participate in", ex_de:"Nehmen Sie an dem Kurs teil?", ex_en:"Do you participate in the course?"},
-        {f:"verlieben", p:"sich in", k:"Akk", t:"to fall in love with", ex_de:"Sie verliebt sich in ihn.", ex_en:"She falls in love with him."},
-        {f:"vorbereiten", p:"sich auf", k:"Akk", t:"to prepare for", ex_de:"Ich bereite mich auf die Prüfung vor.", ex_en:"I prepare for the exam."},
-        {f:"warten", p:"auf", k:"Akk", t:"to wait for", ex_de:"Ich warte auf den Bus.", ex_en:"I wait for the bus."},
-        {f:"zögern", p:"mit", k:"Dat", t:"to hesitate with", ex_de:"Zögere nicht mit deiner Antwort.", ex_en:"Don't hesitate with your answer."},
-        {f:"gratulieren", p:"zu", k:"Dat", t:"to congratulate", ex_de:"Ich gratuliere dir zum Erfolg.", ex_en:"I congratulate you on the success."}
-    ];
-
-    let currentList = [], activeQuestions = [], errorItems = [], qIndex = 0, correct = 0, total = 0;
-
-    const homeDiv = document.getElementById('home');
-    const quizDiv = document.getElementById('quiz');
-    const resultDiv = document.getElementById('result');
-    const scoreSpan = document.getElementById('scoreText');
-    const verbDiv = document.getElementById('verb');
-    const meanDiv = document.getElementById('mean');
-    const optionsDiv = document.getElementById('options');
-    const fbDiv = document.getElementById('fb');
-    const exampleBox = document.getElementById('exampleBox');
-    const exDeSpan = document.getElementById('exDe');
-    const exEnSpan = document.getElementById('exEn');
-    const nextBtn = document.getElementById('nextBtn');
-
-    const prepsPool = ["an","auf","für","von","mit","um","über","in","nach","zu","bei","aus"];
-
-    function shuffle(arr) {
-        for(let i=arr.length-1;i>0;i--){
-            let j=Math.floor(Math.random()*(i+1));
-            [arr[i],arr[j]]=[arr[j],arr[i]];
-        }
-        return arr;
-    }
-
-    function getOptions(correctPrep) {
-        let opts = [correctPrep];
-        while(opts.length<4){
-            let r = prepsPool[Math.floor(Math.random()*prepsPool.length)];
-            if(!opts.includes(r)) opts.push(r);
-        }
-        return shuffle(opts);
-    }
-
-    function updateScore() {
-        scoreSpan.innerText = `Correct: ${correct} / ${total} (Remaining: ${activeQuestions.length - qIndex})`;
-    }
-
-    function showQuestion() {
-        if(qIndex >= activeQuestions.length){ endGame(); return; }
-        let item = activeQuestions[qIndex];
-        verbDiv.innerText = item.f;
-        meanDiv.innerText = item.t;
-        fbDiv.innerText = "";
-        exampleBox.style.display = "none";
-        nextBtn.style.display = "none";
-        let choices = getOptions(item.p);
-        optionsDiv.innerHTML = "";
-        choices.forEach(prep=>{
-            let btn = document.createElement('button');
-            btn.className = 'opt';
-            btn.innerText = prep;
-            btn.onclick = ()=>{
-                document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
-                total++;
-                exDeSpan.innerText = item.ex_de;
-                exEnSpan.innerText = item.ex_en;
-                exampleBox.style.display = "block";
-                if(prep === item.p){
-                    btn.classList.add('correct');
-                    correct++;
-                    fbDiv.innerHTML = `<span style="color:#16a34a">✔ Correct! (${item.k})</span>`;
-                } else {
-                    btn.classList.add('wrong');
-                    errorItems.push(item);
-                    fbDiv.innerHTML = `<span style="color:#dc2626">✘ Wrong! Correct: ${item.p} (${item.k})</span>`;
-                }
-                updateScore();
-                nextBtn.style.display = "block";
-            };
-            optionsDiv.appendChild(btn);
-        });
-    }
-
-    function nextQuestionFunc() {
-        if(nextBtn.style.display === "none") return;
-        qIndex++;
-        showQuestion();
-    }
-
-    function endGame() {
-        quizDiv.classList.add('hidden');
-        resultDiv.classList.remove('hidden');
-        document.getElementById('finalScore').innerHTML = `${correct} / ${total}`;
-        let retryBtn = document.getElementById('retryMistakes');
-        if(errorItems.length===0) retryBtn.style.opacity = "0.5";
-        else retryBtn.style.opacity = "1";
-    }
-
-    function startQuiz(listData) {
-        currentList = [...listData];
-        activeQuestions = shuffle([...currentList]);
-        errorItems = [];
-        qIndex = 0;
-        correct = 0;
-        total = 0;
-        updateScore();
-        homeDiv.classList.add('hidden');
-        quizDiv.classList.remove('hidden');
-        resultDiv.classList.add('hidden');
-        showQuestion();
-    }
-
-    function retryMistakes() {
-        if(errorItems.length===0){ goHome(); return; }
-        activeQuestions = shuffle([...errorItems]);
-        errorItems = [];
-        qIndex = 0;
-        correct = 0;
-        total = 0;
-        updateScore();
-        resultDiv.classList.add('hidden');
-        quizDiv.classList.remove('hidden');
-        showQuestion();
-    }
-
-    function goHome() {
-        homeDiv.classList.remove('hidden');
-        quizDiv.classList.add('hidden');
-        resultDiv.classList.add('hidden');
-    }
-
-    function switchOther() {
-        let isFirst = (currentList === list1);
-        if(isFirst) startQuiz(list2);
-        else startQuiz(list1);
-    }
-
-    document.querySelectorAll('.list-btn').forEach(btn=>{
-        btn.addEventListener('click',()=>{
-            let listType = btn.getAttribute('data-list');
-            if(listType === 'first') startQuiz(list1);
-            else startQuiz(list2);
-        });
-    });
-    nextBtn.addEventListener('click', nextQuestionFunc);
-    document.getElementById('homeBtn').addEventListener('click', goHome);
-    document.getElementById('retryMistakes').addEventListener('click', retryMistakes);
-    document.getElementById('switchList').addEventListener('click', switchOther);
-</script>
-</body>
-</html>
-```
+            <div class="title">Abgeschlossen! 🎉</div>
+            <div id="finalScore" style="
