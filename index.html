@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Verb Master v2.0 - Scalability Edition</title>
+    <title>Verb Master v2.1 - Scalability Stabilized</title>
     <style>
         body { font-family: sans-serif; background: #f0f4f8; display: flex; justify-content: center; padding: 20px; }
         .card { background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 450px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
@@ -41,9 +41,8 @@
 </div>
 
 <script>
-    // SCALABILITY LOCK: Buraya 1000 fiil bile atsan sistem bozulmaz.
     const MASTER_DATA = [
-        // Mevcut 60 Fiil (Örnek Kesit)
+        // GRUP 1 (1-20)
         {f:"warten", p:"auf", t:"beklemek (Akk)", ex:"Ich warte auf dich."},
         {f:"denken", p:"an", t:"düşünmek (Akk)", ex:"Ich denke an dich."},
         {f:"glauben", p:"an", t:"inanmak (Akk)", ex:"Glaubst du an Gott?"},
@@ -56,7 +55,7 @@
         {f:"sich erinnern", p:"an", t:"hatırlamak (Akk)", ex:"Erinnerst du dich an mich?"},
         {f:"ankommen", p:"auf", t:"bağlı olmak (Akk)", ex:"Es kommt auf das Wetter an."},
         {f:"achten", p:"auf", t:"dikkat etmek (Akk)", ex:"Achte auf die Schilder!"},
-        {f:"antworten", p:"auf", t:"cevap vermek (Akk)", ex:"Antworte auf meine question."},
+        {f:"牽worten", p:"auf", t:"cevap vermek (Akk)", ex:"Antworte auf meine Frage."},
         {f:"bitten", p:"um", t:"rica etmek (Akk)", ex:"Darf ich um Hilfe bitten?"},
         {f:"danken", p:"für", t:"teşekkür etmek (Akk)", ex:"Ich danke dir für die Blumen."},
         {f:"einladen", p:"zu", t:"davet etmek (Dat)", ex:"Ich lade dich zu mir ein."},
@@ -64,14 +63,14 @@
         {f:"lachen", p:"über", t:"gülmek (Akk)", ex:"Wir lachen über den Witz."},
         {f:"passen", p:"zu", t:"yakışmak (Dat)", ex:"Das passt zu dir."},
         {f:"sich ärgern", p:"über", t:"kızmak (Akk)", ex:"Er ärgert sich über den Stau."},
-        
-        // YENİ EKLENEN FİİLLER (Benzemeyen & Akk/Dat Edatlı)
+
+        // GRUP 2 (21-40)
         {f:"anfangen", p:"mit", t:"başlamak (Dat)", ex:"Wann fängst du mit der Arbeit an?"},
         {f:"sich beschweren", p:"über", t:"şikayet etmek (Akk)", ex:"Der Gast beschwert sich über das Essen."},
-        {f:"träumen", p:"von", t:"hayal kurmak/rüya görmek (Dat)", ex:"Ich träume von einer Weltreise."},
+        {f:"träumen", p:"von", t:"hayal kurmak (Dat)", ex:"Ich träume von einer Weltreise."},
         {f:"sich verlassen", p:"auf", t:"güvenmek (Akk)", ex:"Ich verlasse mich auf dich."},
         {f:"sich gewöhnen", p:"an", t:"alışmak (Akk)", ex:"Ich gewöhne mich an das frühe Aufstehen."},
-        {f:"verzichten", p:"auf", t:"vazgeçmek/feragat etmek (Akk)", ex:"Ich verzichte auf den Nachtisch."},
+        {f:"verzichten", p:"auf", t:"vazgeçmek (Akk)", ex:"Ich verzichte auf den Nachtisch."},
         {f:"leiden", p:"unter", t:"muzdarip olmak (Dat)", ex:"Er leidet unter dem Lärm."},
         {f:"sich unterhalten", p:"über", t:"sohbet etmek (Akk)", ex:"Wir unterhalten uns über den Film."},
         {f:"sich vorbereiten", p:"auf", t:"hazırlanmak (Akk)", ex:"Bereitest du dich auf die Prüfung vor?"},
@@ -79,22 +78,40 @@
         {f:"sich entscheiden", p:"für", t:"karar vermek (Akk)", ex:"Ich entscheide mich für das rote Auto."},
         {f:"gehören", p:"zu", t:"ait olmak (Dat)", ex:"Österreich gehört zur EU."},
         {f:"sich bewerben", p:"um", t:"başvurmak (Akk)", ex:"Er bewirbt sich um ein Stipendium."},
-        {f:"zählen", p:"auf", t:"güvenmek/saymak (Akk)", ex:"Ich zähle auf deine Unterstützung."},
-        {f:"erkennen", p:"an", t:"-den tanımak (Dat)", ex:"Ich erkenne ihn an seiner Stimme."},
-        {f:"warnen", p:"vor", t:"-e karşı uyarmak (Dat)", ex:"Man warnt uns vor dem Sturm."},
-        {f:"passen", p:"zu", t:"-e uygun olmak (Dat)", ex:"Die Krawatte passt zum Hemd."},
-        {f:"schmecken", p:"nach", t:"- tadı gelmek (Dat)", ex:"Der Tee schmeckt nach Honig."},
-        {f:"riechen", p:"nach", t:"- kokmak (Dat)", ex:"Es riecht nach frischem Brot."},
-        {f:"sich fürchten", p:"vor", t:"-den korkmak (Dat)", ex:"Sie fürchtet sich vor Spinnen."}
-        
-        // NOT: Buraya dilediğin kadar fiil eklemeye devam edebilirsin. 
-        // Kod otomatik olarak 20'li gruplara bölecektir.
+        {f:"zählen", p:"auf", t:"güvenmek (Akk)", ex:"Ich zle auf deine Unterstützung."},
+        {f:"erkennen", p:"an", t:"tanımak (Dat)", ex:"Ich erkenne ihn an seiner Stimme."},
+        {f:"warnen", p:"vor", t:"uyarmak (Dat)", ex:"Man warnt uns vor dem Sturm."},
+        {f:"passen", p:"zu", t:"uygun olmak (Dat)", ex:"Die Krawatte passt zum Hemd."},
+        {f:"schmecken", p:"nach", t:"tadı gelmek (Dat)", ex:"Der Tee schmeckt nach Honig."},
+        {f:"riechen", p:"nach", t:"kokmak (Dat)", ex:"Es riecht nach frischem Brot."},
+        {f:"sich fürchten", p:"vor", t:"korkmak (Dat)", ex:"Sie fürchtet sich vor Spinnen."},
+
+        // GRUP 3 (41-60+) - Buraya ekleme yapmaya devam edebilirsin
+        {f:"sich konzentrieren", p:"auf", t:"odaklanmak (Akk)", ex:"Ich konzentriere mich auf den Test."},
+        {f:"telefonieren", p:"mit", t:"telefonla konuşmak (Dat)", ex:"Ich telefoniere mit Oma."},
+        {f:"suchen", p:"nach", t:"aramak (Dat)", ex:"Ich suche nach dem Schlüssel."},
+        {f:"rechnen", p:"mit", t:"beklemek (Dat)", ex:"Ich rechne mit deiner Hilfe."},
+        {f:"sterben", p:"an", t:"ölmek (Dat)", ex:"Er starb an einer Krankheit."},
+        {f:"sich wundern", p:"über", t:"şaşırmak (Akk)", ex:"Ich wundere mich über das Wetter."},
+        {f:"einverstanden sein", p:"mit", t:"hemfikir olmak (Dat)", ex:"Ich bin damit einverstanden."},
+        {f:"erzählen", p:"von", t:"anlatmak (Dat)", ex:"Erzähl mir von deinem Urlaub."},
+        {f:"fliehen", p:"vor", t:"kaçmak (Dat)", ex:"Er flieht vor der Gefahr."},
+        {f:"gratulieren", p:"zu", t:"kutlamak (Dat)", ex:"Ich gratuliere dir zum Geburtstag."},
+        {f:"schützen", p:"vor", t:"korumak (Dat)", ex:"Schütze dich vor der Kälte."},
+        {f:"gehören", p:"zu", t:"ait olmak (Dat)", ex:"Das gehört zu mir."},
+        {f:"passen", p:"zu", t:"yakışmak (Dat)", ex:"Die Hose passt zu dir."},
+        {f:"leiden", p:"an", t:"hastalık çekmek (Dat)", ex:"Er leidet an einer Grippe."},
+        {f:"fragen", p:"nach", t:"sormak (Dat)", ex:"Er fragt nach dem Weg."},
+        {f:"bestehen", p:"aus", t:"oluşmak (Dat)", ex:"Wasser besteht aus H2O."},
+        {f:"sich streiten", p:"mit", t:"kavga etmek (Dat)", ex:"Streite dich nicht mit ihm."},
+        {f:"sich beklagen", p:"über", t:"şikayet etmek (Akk)", ex:"Er beklagt sich über die Hitze."},
+        {f:"hoffen", p:"auf", t:"ummak (Akk)", ex:"Wir hoffen auf besseres Wetter."},
+        {f:"sich verlieben", p:"in", t:"aşık olmak (Akk)", ex:"Er hat sich in sie verliebt."}
     ];
 
     let currentTestSet = [], idx = 0, score = 0, wrongList = [];
     const ITEMS_PER_PAGE = 20;
 
-    // Sayfa yüklendiğinde menüyü oluştur
     window.onload = showMenu;
 
     function showMenu() {
@@ -114,14 +131,12 @@
             let btn = document.createElement('button');
             btn.className = "btn";
             btn.innerText = `TEST ${i + 1} (${startIdx + 1}-${endIdx})`;
-            btn.onclick = () => startTest(startIdx, endIdx);
+            btn.onclick = () => {
+                currentTestSet = MASTER_DATA.slice(startIdx, endIdx).sort(() => Math.random() - 0.5);
+                initQuiz();
+            };
             menuContainer.appendChild(btn);
         }
-    }
-
-    function startTest(start, end) {
-        currentTestSet = MASTER_DATA.slice(start, end).sort(() => Math.random() - 0.5);
-        initQuiz();
     }
 
     function initQuiz() {
@@ -162,7 +177,6 @@
         } else {
             btn.classList.add('wrong');
             wrongList.push(currentTestSet[idx]);
-            // Doğru olanı da yeşil yapalım ki kullanıcı öğrensin
             document.querySelectorAll('.opt').forEach(b => {
                 if(b.innerText === correct) b.classList.add('correct');
             });
