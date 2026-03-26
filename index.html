@@ -1,169 +1,53 @@
 <!DOCTYPE html>
-
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<title>Verb Master v1.0 - 60 Verbs</title>
-<style>
-body { font-family: sans-serif; background: #f0f4f8; display: flex; justify-content: center; padding: 20px; }
-.card { background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 400px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-.btn { width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; background: #2563eb; color: white; }
-.opt { background: white; color: #333; border: 2px solid #ddd; margin: 5px 0; }
-.hidden { display: none; }
-.correct { background: #16a34a !important; color: white; }
-.wrong { background: #dc2626 !important; color: white; }
-#verb { font-size: 24px; text-align: center; margin: 20px 0; font-weight: bold; color: #2563eb; }
-</style>
+    <meta charset="UTF-8">
+    <title>Verb Master v1.0 - 60 Verbs</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f4f8; display: flex; justify-content: center; padding: 20px; }
+        .card { background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 400px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .btn { width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; background: #2563eb; color: white; }
+        .opt { background: white; color: #333; border: 2px solid #ddd; margin: 5px 0; }
+        .hidden { display: none; }
+        .correct { background: #16a34a !important; color: white; }
+        .wrong { background: #dc2626 !important; color: white; }
+        #verb { font-size: 24px; text-align: center; margin: 20px 0; font-weight: bold; color: #2563eb; }
+    </style>
 </head>
 <body>
 
 <div class="card">
-<div id="home">
-<h2 style="text-align:center">🇩🇪 Verb Master (60 Verbs)</h2>
-<button class="btn" onclick="startTest('A')">LİSTE 1 (Temel 20)</button>
-<button class="btn" onclick="startTest('B')">LİSTE 2 (Orta 20)</button>
-<button class="btn" onclick="startTest('C')">LİSTE 3 (İleri 20)</button>
-</div>
+    <div id="home">
+        <h2 style="text-align:center">🇩🇪 Verb Master (60 Verbs)</h2>
+        <button class="btn" onclick="start('A')">LİSTE 1 (Temel 20)</button>
+        <button class="btn" onclick="start('B')">LİSTE 2 (Orta 20)</button>
+        <button class="btn" onclick="start('C')">LİSTE 3 (İleri 20)</button>
+    </div>
 
-<div id="quiz" class="hidden">
-    <div id="score" style="text-align:center; font-size:12px"></div>
-    <div id="verb"></div>
-    <div id="options"></div>
-    <div id="ex" class="hidden" style="margin-top:15px; padding:10px; border-left:4px solid #16a34a; background:#f0fdf4; font-size:14px"></div>
-    <button id="next" class="btn hidden" onclick="nextQ()" style="background:#0f172a">SIRADAKİ SORU</button>
-</div>
+    <div id="quiz" class="hidden">
+        <div id="score" style="text-align:center; font-size:12px"></div>
+        <div id="verb"></div>
+        <div id="options"></div>
+        <div id="ex" class="hidden" style="margin-top:15px; padding:10px; border-left:4px solid #16a34a; background:#f0fdf4; font-size:14px"></div>
+        <button id="next" class="btn hidden" onclick="nextQ()" style="background:#0f172a">SIRADAKİ SORU</button>
+    </div>
 
-<div id="res" class="hidden" style="text-align:center">
-    <h2>Bitti! 🎉</h2>
-    <h1 id="total"></h1>
-    <button class="btn" onclick="location.reload()">BAŞA DÖN</button>
-</div>
+    <div id="res" class="hidden" style="text-align:center">
+        <h2>Bitti! 🎉</h2>
+        <h1 id="total"></h1>
+        <button class="btn" onclick="location.reload()">BAŞA DÖN</button>
+    </div>
 </div>
 
 <script>
-const data = {
-A: [
-{f:"warten", p:"auf", t:"beklemek (Akk)", ex:"Ich warte auf dich."},
-{f:"denken", p:"an", t:"düşünmek (Akk)", ex:"Ich denke an dich."},
-{f:"glauben", p:"an", t:"inanmak (Akk)", ex:"Glaubst du an Gott?"},
-{f:"teilnehmen", p:"an", t:"katılmak (Dat)", ex:"Er nimmt an dem Kurs teil."},
-{f:"sich freuen (auf)", p:"auf", t:"sevinmek-gelecek (Akk)", ex:"Ich freue mich auf den Urlaub."},
-{f:"sich freuen (über)", p:"über", t:"sevinmek-şu an (Akk)", ex:"Ich freue mich über das Geschenk."},
-{f:"sich interessieren", p:"für", t:"ilgilenmek (Akk)", ex:"Interessierst du dich für Musik?"},
-{f:"sprechen (mit)", p:"mit", t:"konuşmak (Dat)", ex:"Ich spreche mit meinem Chef."},
-{f:"sprechen (über)", p:"über", t:"hakkında konuşmak (Akk)", ex:"Wir sprechen über den Plan."},
-{f:"sich erinnern", p:"an", t:"hatırlamak (Akk)", ex:"Erinnerst du dich an mich?"},
-{f:"ankommen", p:"auf", t:"bağlı olmak (Akk)", ex:"Es kommt auf das Wetter an."},
-{f:"achten", p:"auf", t:"dikkat etmek (Akk)", ex:"Achte auf die Schilder!"},
-{f:"antworten", p:"auf", t:"cevap vermek (Akk)", ex:"Antworte auf meine Frage."},
-{f:"bitten", p:"um", t:"rica etmek (Akk)", ex:"Darf ich um Hilfe bitten?"},
-{f:"danken", p:"für", t:"teşekkür etmek (Akk)", ex:"Ich danke dir für die Blumen."},
-{f:"einladen", p:"zu", t:"davet etmek (Dat)", ex:"Ich lade dich zu mir ein."},
-{f:"gehören", p:"zu", t:"ait olmak (Dat)", ex:"Du gehörst zu mir."},
-{f:"lachen", p:"über", t:"gülmek (Akk)", ex:"Wir lachen über den Witz."},
-{f:"passen", p:"zu", t:"yakışmak (Dat)", ex:"Das passt zu dir."},
-{f:"sich ärgern", p:"über", t:"kızmak (Akk)", ex:"Er ärgert sich über den Stau."}
-],
-B: [
-{f:"sich bewerben", p:"um", t:"başvurmak (Akk)", ex:"Ich bewerbe mich um den Job."},
-{f:"sich entscheiden", p:"für", t:"karar vermek (Akk)", ex:"Ich entscheide mich für dich."},
-{f:"sich verlieben", p:"in", t:"aşık olmak (Akk)", ex:"Er hat sich in sie veriliebt."},
-{f:"sich vorbereiten", p:"auf", t:"hazırlanmak (Akk)", ex:"Bereitest du dich auf den Test vor?"},
-{f:"träumen", p:"von", t:"hayal etmek (Dat)", ex:"Ich träume von einem Haus."},
-{f:"sich gewöhnen", p:"an", t:"alışmak (Akk)", ex:"Ich gewöhne mich an die Kälte."},
-{f:"hoffen", p:"auf", t:"ummak (Akk)", ex:"Wir hofen auf eine Antwort."},
-{f:"schreiben", p:"an", t:"yazmak (Akk)", ex:"Ich schreibe an meine Mutter."},
-{f:"sich beklagen", p:"über", t:"şikayet etmek (Akk)", ex:"Er beklagt sich über den Lärm."},
-{f:"sich informieren", p:"über", t:"bilgi almak (Akk)", ex:"Informier dich über den Kurs."},
-{f:"sich streiten", p:"mit", t:"kavga etmek (Dat)", ex:"Streitest du mit ihm?"},
-{f:"sich unterhalten", p:"mit", t:"sohbet etmek (Dat)", ex:"Ich unterhalte mich mit Anna."},
-{f:"sich verlassen", p:"auf", t:"güvenmek (Akk)", ex:"Du kannst dich auf mich verlassen."},
-{f:"wissen", p:"von", t:"haberdar olmak (Dat)", ex:"Ich weiß nichts von dem Problem."},
-{f:"zweifeln", p:"an", t:"şüphe etmek (Dat)", ex:"Zweifelst du an mir?"},
-{f:"aufhören", p:"mit", t:"bırakmak (Dat)", ex:"Hör mit dem Rauchen auf!"},
-{f:"berichten", p:"über", t:"rapor etmek (Akk)", ex:"Er berichtet über die Reise."},
-{f:"bestehen", p:"aus", t:"oluşmak (Dat)", ex:"Das Set besteht aus 5 Teilen."},
-{f:"diskutieren", p:"mit", t:"tartışmak (Dat)", ex:"Ich diskutiere mit dem Chef."},
-{f:"fragen", p:"nach", t:"sormak (Dat)", ex:"Er fragt nach dem Weg."}
-],
-C: [
-{f:"sich konzentrieren", p:"auf", t:"odaklanmak (Akk)", ex:"Ich konzentriere mich auf den Test."},
-{f:"sich fürchten", p:"vor", t:"korkmak (Dat)", ex:"Fürchtest du dich vor Hunden?"},
-{f:"leiden", p:"an", t:"hastalık çekmek (Dat)", ex:"Er leidet an einer Grippe."},
-{f:"schmecken", p:"nach", t:"tadı gelmek (Dat)", ex:"Das schmeckt nach Zitrone."},
-{f:"riechen", p:"nach", t:"kokmak (Dat)", ex:"Hier riecht es nach Pizza."},
-{f:"sich treffen", p:"mit", t:"buluşmak (Dat)", ex:"Ich treffe mich mit Tom."},
-{f:"überreden", p:"zu", t:"ikna etmek (Dat)", ex:"Er überredet mich zum Mitkommen."},
-{f:"sterben", p:"an", t:"ölmek (hastalıktan) (Dat)", ex:"Er starb an einem Herzinfarkt."},
-{f:"suchen", p:"nach", t:"aramak (Dat)", ex:"Ich suche nach meinem Schlüssel."},
-{f:"rechnen", p:"mit", t:"hesaba katmak (Dat)", ex:"Ich rechne mit deiner Hilfe."},
-{f:"telefonieren", p:"mit", t:"telefonda konuşmak (Dat)", ex:"Ich telefoniere mit meiner Oma."},
-{f:"sich wundern", p:"über", t:"şaşırmak (Akk)", ex:"Ich wundere mich über dich."},
-{f:"gehören", p:"zu", t:"ait olmak (Dat)", ex:"Das gehört zu mir."},
-{f:"einverstanden sein", p:"mit", t:"hemfikir olmak (Dat)", ex:"Bist du mit mir einverstanden?"},
-{f:"erkennen", p:"an", t:"tanımak (Dat)", ex:"Ich erkenne dich an deiner Stimme."},
-{f:"erzählen", p:"von", t:"anlatmak (Dat)", ex:"Erzähl mir von deinem Urlaub!"},
-{f:"fliehen", p:"vor", t:"kaçmak (Dat)", ex:"Er flieht vor der Gefahr."},
-{f:"gratulieren", p:"zu", t:"kutlamak (Dat)", ex:"Ich gratuliere dir zum Geburtstag."},
-{f:"helfen", p:"bei", t:"yardım etmek (Dat)", ex:"Kannst du mir beim Kochen helfen?"},
-{f:"schützen", p:"vor", t:"korumak (Dat)", ex:"Schütze dich vor der Sonne!"}
-]
-};
-
-let current = [], idx = 0, score = 0;
-
-function startTest(listKey) {
-    if (!data[listKey]) return;
-    current = JSON.parse(JSON.stringify(data[listKey])).sort(() =&gt; Math.random() - 0.5);
-    idx = 0; score = 0;
-    document.getElementById(&#39;home&#39;).classList.add(&#39;hidden&#39;);
-    document.getElementById(&#39;quiz&#39;).classList.remove(&#39;hidden&#39;);
-    show();
-}
-
-function show() {
-    let q = current[idx];
-    document.getElementById(&#39;score&#39;).innerText = `Soru: ${idx+1}/${current.length}`;
-    document.getElementById(&#39;verb&#39;).innerText = q.f;
-    document.getElementById(&#39;ex&#39;).classList.add(&#39;hidden&#39;);
-    document.getElementById(&#39;next&#39;).classList.add(&#39;hidden&#39;);
-    
-    let pool = [&quot;auf&quot;, &quot;an&quot;, &quot;mit&quot;, &quot;von&quot;, &quot;in&quot;, &quot;über&quot;, &quot;zu&quot;, &quot;für&quot;, &quot;nach&quot;, &quot;um&quot;, &quot;vor&quot;, &quot;bei&quot;];
-    let opts = [q.p];
-    while(opts.length &lt; 4) {
-        let r = pool[Math.floor(Math.random() * pool.length)];
-        if(!opts.includes(r)) opts.push(r);
-    }
-    opts.sort(() =&gt; Math.random() - 0.5);
-
-    let html = &quot;&quot;;
-    opts.forEach(o =&gt; {
-        html += `&lt;button class=&quot;btn opt&quot; onclick=&quot;checkAnswer(this, &#39;${o}&#39;, &#39;${q.p}&#39;)&quot;&gt;${o}&lt;/button&gt;`;
-    });
-    document.getElementById(&#39;options&#39;).innerHTML = html;
-}
-
-function checkAnswer(btn, sel, cor) {
-    document.querySelectorAll(&#39;.opt&#39;).forEach(b =&gt; b.disabled = true);
-    if(sel === cor) { btn.classList.add(&#39;correct&#39;); score++; }
-    else { btn.classList.add(&#39;wrong&#39;); }
-    
-    document.getElementById(&#39;ex&#39;).innerText = `${current[idx].t}: ${current[idx].ex}`;
-    document.getElementById(&#39;ex&#39;).classList.remove(&#39;hidden&#39;);
-    document.getElementById(&#39;next&#39;).classList.remove(&#39;hidden&#39;);
-}
-
-function nextQ() {
-    idx++;
-    if(idx &lt; current.length) {
-        show();
-    } else {
-        document.getElementById(&#39;quiz&#39;).classList.add(&#39;hidden&#39;);
-        document.getElementById(&#39;res&#39;).classList.remove(&#39;hidden&#39;);
-        document.getElementById(&#39;total&#39;).innerText = `${score} / ${current.length}`;
-    }
-}
-</script>
-
-</body>
-</html>
+    const data = {
+        A: [
+            {f:"warten", p:"auf", t:"beklemek (Akk)", ex:"Ich warte auf dich."},
+            {f:"denken", p:"an", t:"düşünmek (Akk)", ex:"Ich denke an dich."},
+            {f:"glauben", p:"an", t:"inanmak (Akk)", ex:"Glaubst du an Gott?"},
+            {f:"teilnehmen", p:"an", t:"katılmak (Dat)", ex:"Er nimmt an dem Kurs teil."},
+            {f:"sich freuen (auf)", p:"auf", t:"sevinmek-gelecek (Akk)", ex:"Ich freue mich auf den Urlaub."},
+            {f:"sich freuen (über)", p:"über", t:"sevinmek-şu an (Akk)", ex:"Ich freue mich über das Geschenk."},
+            {f:"sich interessieren", p:"für", t:"ilgilenmek (Akk)", ex:"Interessierst du dich für Musik?"},
+            {f:"sprechen (mit)", p:"mit", t:"konuşmak (Dat)", ex:"Ich spreche mit meinem Chef."},
+            {f:"sprechen (über)", p:"über", t:"hakkında konuşmak (Akk)",
